@@ -4,10 +4,10 @@ import router from './router/'
 import './config/http'
 import './config/flexible'
 import './config/fastclick'
-import 'mint-ui/lib/style.css'
-import './style/swiper.min.css'
-
-
+import AtComponents from 'at-ui'
+import 'at-ui-style'
+Vue.use(AtComponents)
+import $ from 'jquery'
 
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function() {
@@ -16,7 +16,7 @@ if ('addEventListener' in document) {
 }
 
 
-window.onload=function () {
+window.onload = function () {
     document.addEventListener('touchstart',function (event) {
         if(event.touches.length>1){
             event.preventDefault();
@@ -35,6 +35,6 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
 })
 

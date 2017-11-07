@@ -1,8 +1,17 @@
 import axios from 'axios'
 import '../config/http'
-import {iclienturl,ifeng3gurl,commenturl} from '../config/env'
+import {
+  iclienturl, ifeng3gurl, commenturl, getUpItemUrl, getMidItemUrl, getBottomItemUrl
+} from '../config/env'
+
+
+export const getUpItem = (id,page,gv) => axios.post(iclienturl+'ClientNews?id='+id+'&page='+page+'&gv='+gv)
+export const getMidItem = (id,page,gv) => axios.post(iclienturl+'ClientNews?id='+id+'&page='+page+'&gv='+gv)
+export const getBottomItem = (id,page,gv) => axios.post(iclienturl+'ClientNews?id='+id+'&page='+page+'&gv='+gv)
+
+
+//export const getnews = (id,page,gv) => axios.post(iclienturl+'ClientNews', {id:id,page:page,gv:gv})
 //新闻
- //export const getnews = (id,page,gv) => axios.post(iclienturl+'ClientNews', {id:id,page:page,gv:gv})
 export const getnews = (id,page,gv) => axios.post(iclienturl+'ClientNews?id='+id+'&page='+page+'&gv='+gv)
 //轮播图
 export const getcarousel = (url) => axios.get(ifeng3gurl+url)

@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import App from '../App'
+var main = r => require.ensure([], () => r(require('@/components/main/main')), 'main')
+var paper = r => require.ensure([], () => r(require('@/components/paper/paper')), 'paper')
 
-var home = r => require.ensure([], () => r(require('@/components/home/home')), 'home')
+var homes = r => require.ensure([], () => r(require('@/components/home/homes')), 'homes')
 var carousel = r => require.ensure([], () => r(require('@/components/carousel/carousel')), 'carousel')
 var article = r => require.ensure([], () => r(require('@/components/article/article')), 'article')
 var video = r => require.ensure([], () => r(require('@/components/video/video')), 'video')
@@ -17,25 +19,42 @@ const routes = [
       children: [
       {
         path: '',
-        redirect: '/home'
+        redirect: '/main'
       },
       {
-        path: '/home',
-        component: home,
+        path: '/main',
+        component: main,
         children:[
-        {
-          path: 'carousel',
-          component: carousel,
-
-        },
-        {
-          path: 'article',
-          component: article,
-        },
-        {
-          path: 'video',
-          component: video,
-        },
+          {
+            path: 'paper',
+            component: paper
+          },
+          {
+            path: 'item',
+            component: paper
+          },
+          {
+            path: 'setting',
+            component: paper
+          }
+        ]
+      },
+      {
+        path: '/homes',
+        component: homes,
+        children:[
+          {
+            path: 'carousel',
+            component: carousel,
+          },
+          {
+            path: 'article',
+            component: article,
+          },
+          {
+            path: 'video',
+            component: video,
+          },
         ]
       },
       {

@@ -48,7 +48,7 @@ import infiniteScroll from 'vue-infinite-scroll'
 import {getnews} from '@/service/getData'
 import {dealurl,showBack,animate} from '@/config/mUtils'
 export default {
-  name: 'home',
+  name: 'homes',
   data () {
     return {
       swiper: [],
@@ -110,16 +110,16 @@ export default {
     },
     toCarousel(params){
       if(params.indexOf(".com/")>0){
-        this.$router.push('/home/carousel?'+dealurl(params))
+        this.$router.push('/homes/carousel?'+dealurl(params))
       }else{
-        this.$router.push('/home/carousel?'+params)
+        this.$router.push('/homes/carousel?'+params)
       }
     },
     toArticle(params){
-      this.$router.push('/home/article?'+params)
+      this.$router.push('/homes/article?'+params)
     },
     toVideo(params){
-      this.$router.push('/home/video?'+params)
+      this.$router.push('/homes/video?'+params)
     },
     toTopic(params){
 
@@ -136,7 +136,7 @@ export default {
   },
   directives: {infiniteScroll},
 
-  components:{swiper, swiperSlide,newslist,loading}
+  components:{swiper, swiperSlide, newslist, loading}
 }
 </script>
 
