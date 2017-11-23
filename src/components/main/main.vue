@@ -1,26 +1,17 @@
 <template>
   <div class="home">
-
-    <!--<swiper :options="swiperOption" class="swiper-wrap" v-if="swiper.length">-->
-      <!--<swiper-slide v-for="(item,index) in swiper" :key="index"  v-if="item.type!='web'">-->
-        <!--<span class="title">{{item.title}}</span>-->
-        <!--<img :src="item.thumbnail" alt="" @click="toCarousel(item.id)"/>-->
-      <!--</swiper-slide>-->
-      <!--<div class="swiper-pagination" slot="pagination" v-if="swiper.length>1"></div>-->
-    <!--</swiper>-->
-
     <section class="topicbox">
-      <!--<div class="category" v-for="(item,index) in topic.item" @click="toTopic(item.id)">-->
-        <!--<img :src="item.thumbnail" />-->
-        <!--<span class="title">{{item.title}}</span>-->
-      <!--</div>-->
       <div class="category" @click="toPaper">
         <label>开单</label>
         <span class="title">开单</span>
       </div>
+      <div class="category" @click="toBillList">
+        <label>订单</label>
+        <span class="title">订单列表</span>
+      </div>
       <div class="category" @click="toItem">
-        <label>商品</label>
-        <span class="title">添加商品</span>
+        <label>配件</label>
+        <span class="title">添加配件</span>
       </div>
       <div class="category" @click="toSetting">
         <label>设置</label>
@@ -28,21 +19,9 @@
       </div>
     </section>
 
-    <!--<section class="project-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">-->
-      <!--<newslist-->
-      <!--:newslist = "news.item"-->
-      <!--@toCarousel = "toCarousel"-->
-      <!--@toArticle = "toArticle"-->
-      <!--@toVideo = "toVideo"-->
-      <!--@toTopic = "toTopic">-->
-      <!--</newslist>-->
-    <!--</section>-->
-
-    <loading :loadernone="loadernone"></loading>
-
-    <transition name="backtop">
-      <div class="to-top" @click="backTop" v-if="showBackStatus"></div>
-    </transition>
+    <!--<transition name="backtop">-->
+      <!--<div class="to-top" @click="backTop" v-if="showBackStatus"></div>-->
+    <!--</transition>-->
     <transition :name="transitionName" >
       <router-view></router-view>
     </transition>
@@ -50,19 +29,13 @@
 </template>
 <script>
 
-
-
-
-
 import newslist from '@/components/commen/newslist'
 import loading from '@/components/commen/loading'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import {swiper, swiperSlide} from 'vue-awesome-swiper'
 import infiniteScroll from 'vue-infinite-scroll'
 import {getnews} from '@/service/getData'
-import {dealurl,showBack,animate} from '@/config/mUtils'
-
-
+import {dealurl, showBack, animate} from '@/config/mUtils'
 
 export default {
   name: 'main',
@@ -73,7 +46,7 @@ export default {
       topic:[],
       page:1,
       busy: true,
-      loadernone:false,//没有数据提示
+      loadernone:false,
       swiperOption: {
         pagination: '.swiper-pagination',
         paginationClickable: true,
@@ -127,6 +100,9 @@ export default {
     },
     toPaper(){
       this.$router.push('/main/paper')
+    },
+    toBillList(){
+      this.$router.push('/billList')
     },
     toItem(){
       this.$router.push('/main/item')
@@ -192,11 +168,13 @@ export default {
   display: flex;
   justify-content: space-between;
   .category{
+    cursor: pointer;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     label{
+      cursor: pointer;
       height: 100px;
       width: 100px;
       border-radius: 50px;
@@ -208,17 +186,22 @@ export default {
   }
   .category:nth-of-type(1){
     label{
-      background-color: red;
+      background-color: #FF3131;
     }
   }
   .category:nth-of-type(2){
     label{
-      background-color: gray;
+      background-color: #FFB41B;
     }
   }
   .category:nth-of-type(3){
     label{
-      background-color: green;
+      background-color: #5B89F8;
+    }
+  }
+  .category:nth-of-type(4){
+    label{
+      background-color: #0BBC49;
     }
   }
   /*img{*/

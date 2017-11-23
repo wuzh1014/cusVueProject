@@ -18,10 +18,8 @@
         routerto(){
           this.$router.go(-1)
         },
-
       }
     }
-
 </script>
 
 <style lang="scss" scoped>

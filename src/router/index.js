@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import App from '../App'
 var main = r => require.ensure([], () => r(require('@/components/main/main')), 'main')
 var paper = r => require.ensure([], () => r(require('@/components/paper/paper')), 'paper')
+var billList = r => require.ensure([], () => r(require('@/components/paper/billList')), 'billList')
 
 var homes = r => require.ensure([], () => r(require('@/components/home/homes')), 'homes')
 var carousel = r => require.ensure([], () => r(require('@/components/carousel/carousel')), 'carousel')
@@ -31,6 +32,24 @@ const routes = [
           },
           {
             path: 'item',
+            component: paper
+          },
+          {
+            path: 'setting',
+            component: paper
+          }
+        ]
+      },
+      {
+        path: '/billList',
+        component: billList,
+        children:[
+          {
+            path: 'item',
+            component: billList
+          },
+          {
+            path: 'items',
             component: paper
           },
           {

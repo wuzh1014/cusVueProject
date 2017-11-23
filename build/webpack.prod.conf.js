@@ -9,7 +9,14 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
-var env = config.build.env
+// import url from 'url';
+// import proxy from 'proxy-middleware';
+// var proxyOptions = url.parse('http://127.0.0.1:3000/');
+// proxyOptions.route = '/api';
+// proxy(proxyOptions);
+
+
+var env = config.build.env;
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {

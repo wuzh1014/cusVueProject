@@ -1,8 +1,8 @@
 <template>
     <section id='head' class="head-other">
-      <div class="head-back"><i class="icon icon-chevron-left" @click="routerto"></i></div>
+      <div class="head-back" @click="routerto"><i class="icon icon-chevron-left"></i></div>
       <div class="head-title">{{headTitle}}</div>
-      <div class="head-go"><i class="icon icon-chevron-right" @click="routerto"></i></div>
+      <div class="head-go" @click="comfirmPage"><i class="icon icon-chevron-right"></i></div>
     </section>
 </template>
 
@@ -18,7 +18,9 @@
         routerto(){
           this.$router.go(-1)
         },
-
+        comfirmPage(){
+          this.$emit('comfirmPage')
+        },
       }
     }
 
@@ -35,6 +37,7 @@
     line-height: 1.093333rem;
     display: flex;
     head-base{
+      cursor: pointer;
       background-color: #66ff99;
       border-radius: 45px;
       @include wh(0.8rem, 0.8rem);

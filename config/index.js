@@ -6,7 +6,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -18,7 +18,7 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
   },
   dev: {
     env: require('./dev.env'),
@@ -27,25 +27,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/iclient': {
-        target: 'https://api.iclient.ifeng.com/',
+      '/api': {
+        target: 'http://127.0.0.1:3000/',
         changeOrigin: true,
         pathRewrite: {
-          '^/iclient': ''
-        }
-      },
-      '/ifeng3g': {
-        target: 'https://api.3g.ifeng.com/',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/ifeng3g': ''
-        }
-      },
-      '/comment': {
-        target: 'http://comment.ifeng.com/',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/comment': ''
+          '^/api': ''
         }
       }
     },

@@ -9,7 +9,7 @@ axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
 axios.interceptors.request.use(
     config => {
       Indicator.open({
-        text: '加载中...',
+        // text: '加载中...',
         spinnerType: 'fading-circle'
       });
       return config;

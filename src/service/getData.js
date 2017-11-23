@@ -4,11 +4,7 @@ import {
   iclienturl, ifeng3gurl, commenturl, getUpItemUrl, getMidItemUrl, getBottomItemUrl
 } from '../config/env'
 
-
-export const getUpItem = (id,page,gv) => axios.post(iclienturl+'ClientNews?id='+id+'&page='+page+'&gv='+gv)
-export const getMidItem = (id,page,gv) => axios.post(iclienturl+'ClientNews?id='+id+'&page='+page+'&gv='+gv)
-export const getBottomItem = (id,page,gv) => axios.post(iclienturl+'ClientNews?id='+id+'&page='+page+'&gv='+gv)
-
+export const doDataPost = (dataUrl, data) => axios.post(process.env.HTTP_PREFIX + dataUrl, data)
 
 //export const getnews = (id,page,gv) => axios.post(iclienturl+'ClientNews', {id:id,page:page,gv:gv})
 //新闻
