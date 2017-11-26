@@ -1,244 +1,284 @@
 <template>
   <div class="paper">
-    <headTop :headTitle="titleName" @comfirmPage="comfirmPage"></headTop>
-    <div class="box">
-      <div class="container-fluid">
-        <div class="row flex">
-          <div class="col-md-24" v-if="contentId">
-            <b>订单号&nbsp;:&nbsp;</b><span>{{contentId}}</span>
-          </div>
-          <div class="col-md-6">
-            <b>姓名&nbsp;:&nbsp;</b><span v-if="hideNumFlag">{{name}}</span>
-          </div>
-          <div class="col-md-6">
-            <b>地址&nbsp;:&nbsp;</b><span v-if="hideNumFlag">{{address}}</span>
-          </div>
-          <div class="col-md-6">
-            <b>手机&nbsp;:&nbsp;</b><span v-if="hideNumFlag">{{mobile}}</span>
-          </div>
-          <div class="col-md-6">
-            <b>电话&nbsp;:&nbsp;</b><span v-if="hideNumFlag">{{phone}}</span>
-          </div>
-          <div class="col-md-6">
-            <at-input v-if="!hideNumFlag" v-model="name" placeholder="姓名" status="success" icon="info"></at-input>
-          </div>
-          <div class="col-md-6">
-            <at-input v-if="!hideNumFlag" v-model="address" placeholder="地址" status="success" icon="info"></at-input>
-          </div>
-          <div class="col-md-6">
-            <at-input v-if="!hideNumFlag" v-model="mobile" placeholder="手机" status="success" icon="info"></at-input>
-          </div>
-          <div class="col-md-6">
-            <at-input v-if="!hideNumFlag" v-model="phone" placeholder="电话" status="success" icon="info"></at-input>
-          </div>
-        </div>
+    <el-container class="box">
+      <headTop
+        :hideNumFlag="hideNumFlag"
+        :headTitle="titleName"
+        @showTitle="showTitle"
+        @comfirmPage="comfirmPage"></headTop>
+      <el-main>
+        <el-row>
+          <el-col :span="6" v-if="contentId">
+            <b>订单号 : </b><span>{{contentId}}</span>
+          </el-col>
 
-        <div class="row flex">
-          <div class="col-md-8 flex-top item" v-for="(item, index) in items" >
-            <div class="container frame itemFrame">
-              <div class="row flex row-up flex-middle">
-                <div class="col-md-4 flex-end">
-                  <at-button type="info" size="small" @click="duringGetTypes(index, 1)">轨</at-button>
-                </div>
-                <div class="col-md-7">
-                  <!--<el-input-number v-if="!hideNumFlag" size="mini" v-model="item.upLong"></el-input-number>-->
-                  <at-input-number v-if="!hideNumFlag" v-model="item.upLong" size="small" :min="0" :step="0.1"></at-input-number>
-                  <span class="replaceSpan" v-else>{{item.upLong}}</span>
-                </div>
-                <div class="col-md-2">
-                  <span>米</span>
-                </div>
-                <div class="col-md-1">
-                  <span>x</span>
-                </div>
-                <div class="col-md-7">
-                  <at-input-number v-if="!hideNumFlag" v-model="item.upTime" size="small" :min="0"></at-input-number>
-                  <span class="replaceSpan" v-else>{{item.upTime}}</span>
-                </div>
-                <div class="col-md-2">
-                  <span>条</span>
-                </div>
-              </div>
+          <el-col :span="24" class="clearfix" style="height: 4px"></el-col>
+          <el-col :span="6">
+            <b>姓名 : </b><span v-if="hideNumFlag">{{name}}</span>
+          </el-col>
+          <el-col :span="6">
+            <b>地址 : </b><span v-if="hideNumFlag">{{address}}</span>
+          </el-col>
+          <el-col :span="6">
+            <b>手机 : </b><span v-if="hideNumFlag">{{mobile}}</span>
+          </el-col>
+          <el-col :span="6">
+            <b>电话 : </b><span v-if="hideNumFlag">{{phone}}</span>
+          </el-col>
+          <el-col :span="24" class="clearfix" style="height: 4px"></el-col>
+          <el-col :span="6">
+            <el-input
+              size="mini"
+              v-if="!hideNumFlag"
+              placeholder="姓名"
+              prefix-icon="el-icon-edit"
+              v-model="name">
+            </el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-input
+              size="mini"
+              v-if="!hideNumFlag"
+              placeholder="地址"
+              prefix-icon="el-icon-location-outline"
+              v-model="address">
+            </el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-input
+              size="mini"
+              v-if="!hideNumFlag"
+              placeholder="手机"
+              prefix-icon="el-icon-mobile-phone"
+              v-model="mobile">
+            </el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-input
+              size="mini"
+              v-if="!hideNumFlag"
+              placeholder="电话"
+              prefix-icon="el-icon-phone-outline"
+              v-model="phone">
+            </el-input>
+          </el-col>
+          <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+        </el-row>
 
-              <div class="row flex row-up flex-middle">
-                <div class="col-md-4 col-md-offset-18">
-                  <at-button type="info" icon="icon-type" size="small" circle @click="duringGetTypes(index, 2)"></at-button>
-                </div>
-              </div>
-
-              <div class="row flex row-mid">
-                <div class="col-md-12">
-                  <div class="row flex flex-middle split-row">
-                    <div class="col-md-24">
-                      <div class="row flex flex-middle">
-                        <div class="col-md-15" v-if="!hideNumFlag">
-                          <at-input-number v-model="item.allLong" :min="0" :step="0.1"></at-input-number>
-                        </div>
-                        <div class="col-md-10" v-else>
-                          <span class="replaceSpan">{{item.allLong}}</span>
-                        </div>
-                        <div class="col-md-9" v-if="!hideNumFlag">
-                          <span>米/高</span>
-                        </div>
-                        <div class="col-md-14" v-else>
-                          <span>米/高</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row flex flex-middle split-row">
-                    <div class="col-md-24">
-                      <div class="row flex flex-middle">
-                        <div class="col-md-15">
-                          <at-input-number v-if="!hideNumFlag" v-model="item.flag" :min="0"></at-input-number>
-                          <span class="replaceSpan" v-else>{{item.flag}}</span>
-                        </div>
-                        <div class="col-md-9">
-                          <span>幅</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row flex flex-middle split-row">
-                    <div class="col-md-24">
-                      <div class="row flex flex-middle">
-                        <div class="col-md-15">
-                          <at-input-number v-if="!hideNumFlag" v-model="item.count" :min="0"></at-input-number>
-                          <span class="replaceSpan" v-else>{{item.count}}</span>
-                        </div>
-                        <div class="col-md-9">
-                          <span>个</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-12 inner">
-                  <div class="row" style="height: 28%;">
-                    <div class="col-md-7">
-                      <at-button type="info" size="small" @click="duringGetTypes(index, 3)">布</at-button>
-                    </div>
-                  </div>
-                  <div class="row flex flex-middle">
-                    <div class="col-md-15">
-                      <at-input-number v-if="!hideNumFlag" v-model="item.inLong" size="small" :min="0" :step="0.1"></at-input-number>
-                      <span class="replaceSpan" v-else>{{item.inLong}}</span>
-                    </div>
-                    <div class="col-md-9">
-                      <span>米</span>
-                    </div>
-                    <div class="col-md-15">
-                      <at-input-number v-if="!hideNumFlag" v-model="item.inTime" size="small" :min="0"></at-input-number>
-                      <span class="replaceSpan" v-else>{{item.inTime}}</span>
-                    </div>
-                    <div class="col-md-9">
-                      <span>条</span>
-                    </div>
-                    <div class="col-md-24">
-                      <at-tag>共{{item.inMeter}}米</at-tag>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row flex row-bottom flex-middle">
-                <div class="col-md-24">
-                  <div class="row flex flex-middle">
-                    <div class="col-md-4 flex-end">
-                      <at-button type="info" size="small" @click="duringGetTypes(index, 4)">纱</at-button>
-                    </div>
-                    <div class="col-md-7">
-                      <at-input-number v-if="!hideNumFlag" v-model="item.bottomLong" size="small" :min="0" :step="0.1"></at-input-number>
-                      <span class="replaceSpan" v-if="hideNumFlag">{{item.bottomLong}}</span>
-                    </div>
-                    <div class="col-md-2">
-                      <span>米</span>
-                    </div>
-                    <div class="col-md-1">
-                      <span>x</span>
-                    </div>
-                    <div class="col-md-7">
-                      <at-input-number v-if="!hideNumFlag" v-model="item.bottomTime" size="small" :min="0"></at-input-number>
-                      <span class="replaceSpan" v-if="hideNumFlag">{{item.bottomTime}}</span>
-                    </div>
-                    <div class="col-md-2">
-                      <span>条</span>
-                    </div>
-                  </div>
-                  <div class="row flex flex-middle">
-                    <div class="col-md-12 col-md-offset-4">
-                      <at-tag>共{{item.bottomMeter}}米</at-tag>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <el-row>
+          <el-card class="box-card" :key="index" v-for="(item, index) in items" >
+            <div slot="header" class="clearfix">
+              <span>第{{index + 1}}</span>
+              <el-button v-if="!hideNumFlag" @click="removeItem(index)"
+                style="float: right; padding: 3px 0" type="text" >删除</el-button>
             </div>
-          </div>
-          <div class="col-md-8 flex-top item" v-if="!hideNumFlag">
-            <div class="container frame addFrame">
-              <i class="icon icon-plus-square" @click="createItem()"></i>
-            </div>
-          </div>
-        </div>
+            <el-col :span="24">
+              <el-button v-if="!hideNumFlag" @click="duringGetTypes(index, 0)"
+                         size="mini" type="success" plain>轨道</el-button>
+              <b v-else>轨道 : </b>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.upLong"></el-input-number>
+              <span v-else>{{item.upLong}}</span>
+              <span>米 x </span>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.upTime"></el-input-number>
+              <span v-else>{{item.upTime}}</span>
+              <span>条</span>
+            </el-col>
+
+            <el-col :span="24" v-if="item.typeNames[0].length>0">
+              <span>(</span>
+              <span v-for="iname in item.typeNames[0]">{{iname}} </span>
+              <span>)</span>
+            </el-col>
+
+            <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+
+            <el-col :span="24">
+              <el-button v-if="!hideNumFlag" @click="duringGetTypes(index, 1)"
+                         size="mini" type="success" plain>天花</el-button>
+              <b v-else>天花 : </b>
+              <span v-if="item.typeNames[1].length>0">
+                <span>(</span>
+                <span v-for="iname in item.typeNames[1]"> {{iname}} </span>
+                <span>)</span>
+              </span>
+            </el-col>
 
 
-        <div class="row flex footerDetail">
-          <div class="col-md-10">
-            <el-date-picker v-model="reciveTime" type="datetime"
-                            placeholder="时间" size="mini">
+            <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+
+            <el-col :span="24">
+              <span>[ </span>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.allLong"></el-input-number>
+              <span v-else>{{item.allLong}}</span>
+              <span>米 / 高 ] [ </span>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.flag"></el-input-number>
+              <span v-else>{{item.flag}}</span>
+              <span>幅 ] [ </span>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.count"></el-input-number>
+              <span v-else>{{item.count}}</span>
+              <span>个 ]</span>
+            </el-col>
+
+            <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+
+            <el-col :span="24">
+              <el-button v-if="!hideNumFlag" @click="duringGetTypes(index, 2)" size="mini" type="success" plain>布</el-button>
+              <b v-else>布 : </b>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.inLong"></el-input-number>
+              <span v-else>{{item.inLong}}</span>
+              <span>米 x </span>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.inTime"></el-input-number>
+              <span v-else>{{item.inTime}}</span>
+              <span>条</span>
+              <el-tag size="mini">共{{item.inMeter}}米</el-tag>
+            </el-col>
+
+            <el-col :span="24" v-if="item.typeNames[2].length>0">
+              <span>(</span>
+              <span v-for="iname in item.typeNames[2]"> {{iname}} </span>
+              <span>)</span>
+            </el-col>
+
+            <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+            <el-col :span="24">
+              <el-button v-if="!hideNumFlag" @click="duringGetTypes(index, 3)"
+                         size="mini" type="success" plain>纱</el-button>
+              <b v-else>纱 : </b>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.bottomLong"></el-input-number>
+              <span v-else>{{item.bottomLong}}</span>
+              <span>米 x </span>
+              <el-input-number v-if="!hideNumFlag" size="mini" v-model="item.bottomTime"></el-input-number>
+              <span v-else>{{item.bottomTime}}</span>
+              <span>条</span>
+              <el-tag size="mini">共{{item.bottomMeter}}米</el-tag>
+            </el-col>
+
+            <el-col :span="24" v-if="item.typeNames[3].length>0">
+              <span>(</span>
+              <span v-for="iname in item.typeNames[3]"> {{iname}} </span>
+              <span>)</span>
+            </el-col>
+
+            <el-col :span="24" class="clearfix" style="height: 15px"></el-col>
+          </el-card>
+          <el-card v-if="!hideNumFlag" class="box-card addFrame">
+            <i class="el-icon-plus" @click="createItem()"></i>
+          </el-card>
+        </el-row>
+
+
+        <el-row>
+          <el-col :span="24" class="clearfix" style="height: 10px"></el-col>
+          <el-col :span="10">
+            <el-date-picker
+              v-model="reciveTime" type="datetime"
+              placeholder="时间" size="mini">
             </el-date-picker>
-          </div>
-          <div class="col-md-12">
-            <at-checkbox-group>
-              <at-checkbox v-model="cutFlag">剪好</at-checkbox>
-              <at-checkbox v-model="sliceFlag">介好</at-checkbox>
-              <at-checkbox v-model="packFlag">入袋</at-checkbox>
-            </at-checkbox-group>
-          </div>
-          <div class="col-md-24" style="line-height: 4px">&nbsp;</div>
-          <div class="col-md-6">
-            <b>合计</b>
-          </div>
-          <div class="col-md-6">
-            <b>订金</b>
-          </div>
-          <div class="col-md-6">
-            <b>实欠</b>
-          </div>
-          <div class="col-md-6">
-            <b>签收人</b>
-          </div>
-          <div class="col-md-6">
+          </el-col>
+          <el-col :span="12">
+            <el-checkbox v-model="cutFlag" label="剪好" border size="mini"></el-checkbox>
+            <el-checkbox v-model="sliceFlag" label="介好" border size="mini"></el-checkbox>
+            <el-checkbox v-model="packFlag" label="入袋" border size="mini"></el-checkbox>
+          </el-col>
+          <el-col :span="24" class="clearfix" style="height: 5px"> </el-col>
+          <el-col :span="6">
+            <b>合计 : </b><span v-if="hideNumFlag">{{prize}}</span>
+          </el-col>
+          <el-col :span="6">
+            <b>订金 : </b><span v-if="hideNumFlag">{{preMoney}}</span>
+          </el-col>
+          <el-col :span="6">
+            <b>实欠 : </b><span v-if="hideNumFlag">{{restMoney}}</span>
+          </el-col>
+          <el-col :span="6">
+            <b>签收人 : </b><span v-if="hideNumFlag">{{operator}}</span>
+          </el-col>
+          <el-col :span="24" class="clearfix" style="height: 5px"> </el-col>
+          <el-col v-if="!hideNumFlag" :span="6">
             <el-input-number size="mini" v-model="prize"></el-input-number>
-          </div>
-          <div class="col-md-6">
+          </el-col>
+          <el-col v-if="!hideNumFlag" :span="6">
             <el-input-number size="mini" v-model="preMoney"></el-input-number>
-          </div>
-          <div class="col-md-6">
+          </el-col>
+          <el-col v-if="!hideNumFlag" :span="6">
             <el-input-number size="mini" v-model="restMoney"></el-input-number>
-          </div>
-          <div class="col-md-6">
-            <at-input v-model="operator" placeholder="签收人" status="success" icon="info"></at-input>
-          </div>
-        </div>
-      </div>
-    </div>
+          </el-col>
+          <el-col v-if="!hideNumFlag" :span="6">
+            <el-input
+              size="mini"
+              v-if="!hideNumFlag"
+              placeholder="签收人"
+              prefix-icon="el-icon-edit"
+              v-model="operator">
+            </el-input>
+          </el-col>
+          <el-col :span="24" class="clearfix" style="height: 4px"></el-col>
+          <el-col :span="24">
+            <b>备注 : </b>
+            <el-input
+              size="mini"
+              v-if="!hideNumFlag"
+              placeholder="备注"
+              prefix-icon="el-icon-edit"
+              type="textarea"
+              v-model="memo">
+            </el-input>
+            <span v-else>{{memo}}</span>
+          </el-col>
+          <el-col :span="24" v-if="createTime">
+            <b>创建日期 : </b><span>{{createTime}}</span>
+          </el-col>
+          <el-col :span="24" class="clearfix" style="height: 4px"></el-col>
 
-    <at-modal v-model="modalChoose">
-      <div slot="header" style="text-align:center;">
-        <span>{{chooseTittle}}</span>
-      </div>
-      <chooseContent :itemTypes="itemTypes" :curIndex="curIndex"></chooseContent>
-      <div slot="footer">
-        <at-button style="width:100%;" type="primary" @click="modalChoose=false">确认</at-button>
-      </div>
-    </at-modal>
+        </el-row>
+        <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+      </el-main>
+    </el-container>
+
+
+    <el-dialog
+      :title="chooseTittle"
+      :visible.sync="modalChoose" append-to-body center>
+      <chooseContent
+        :items="items"
+        :modelType="modelType"
+        :itemTypes="itemTypes"
+        :curIndex="curIndex"></chooseContent>
+      <span slot="footer" class="dialog-footer">
+        <!--<el-button @click="modalChoose=!modalChoose">取 消</el-button>-->
+        <el-button type="primary" @click="modalChoose=!modalChoose">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
+    <el-dialog
+      title="修改订单名称"
+      :visible.sync="titleFlag" append-to-body center>
+      <el-row>
+        <el-col :span="24">
+          <el-input
+            size="mini"
+            placeholder="订单名称"
+            prefix-icon="el-icon-edit"
+            v-model="titleName">
+          </el-input>
+        </el-col>
+      </el-row>
+
+
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="titleFlag=!titleFlag">确 定</el-button>
+      </span>
+    </el-dialog>
+
 
   </div>
 </template>
 <style scoped lang="scss">
   @import '../../style/mixin';
+  .clearfix{
+    clear: both;
+  }
   .paper{
     position: fixed;
     top: 0px;
@@ -249,139 +289,60 @@
     background-color: #fff;
     overflow: auto;
     .box{
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      padding-top: 1.093333rem;
-      .item{
-        padding: 10px;
-        height: 35vw;
-        .frame{
-          width: 100%;
-          height: 100%;
-          border-radius: 5%;
-          position: relative;
-          padding: 5px;
-        }
-        .itemFrame{
-          border: 1px solid #000;
-          .inner{
-            border: 1px solid gray;
-            border-radius: 5%;
-            padding: 5px;
-          }
-          .row-up{
-            height: 13%;
-          }
-          .row-mid{
-            height: 50%;
-            .split-row{
-              height: 33%;
-            }
-          }
-          .row-bottom{
-            height: 24%;
-          }
-          .at-input-number{
-            width: 1rem;
-          }
-          .at-btn{
-            width: 0.5rem;
-            padding: 1px 4px 1px 4px;
-          }
-          .at-btn.at-btn--circle{
-            width: 28px;
-            height: 28px;
-          }
-          .replaceSpan{
-            float: right;
-          }
-          .at-tag{
-            margin-top: 5px;
-          }
-        }
-        .addFrame{
-          text-align: center;
-          .icon{
-            @include center;
-            line-height: 80px;
-            font-size: 80px;
-          }
+      font-size: 15px;
+      padding-top: 70px;
+      .el-card{
+        width: auto;
+        height: auto;
+        display: inline-block;
+      }
+      .addFrame{
+        text-align: center;
+        i{
+          cursor: pointer;
+          font-size: 80px;
         }
       }
-      .footerDetail{
-        .at-checkbox-group{
-          line-height: 25px;
-        }
-      }
-
-
-      .calendar-dialog{
-        position: absolute;
-        left:0;
-        top:0;
-        right:0;
-        bottom:0;
-      }
-
-      .calendar-dialog-mask{
-        background:rgba(255,255,255,.5);
-        width:100%;
-        height:100%;
-      }
-
-      .calendar-dialog-body{
-        background: #fff;
-        position: absolute;
-        left:50%;
-        top:30%;
-        transform: translate(-50%,-50%);
-        padding:20px;
-        border: 1px solid #eee;
-        border-radius: 2px;
-        min-width: 5.2rem;
-        min-height: 5.5rem;
-        z-index: 1;
-      }
-
-
     }
   }
-
-
 </style>
 <script>
   import chooseContent from '@/components/paper/chooseContent'
   import headTop from '@/components/paper/head'
-  import VueAwesomeSwiper from 'vue-awesome-swiper'
   import {doDataPost} from '@/service/getData'
-  import calendar from '../calendar/calendar.vue'
 
   export default {
     name: 'paper',
     data () {
+      const defaultItem = {
+        upLong: 0,
+        upTime: 0,
+        upMeter: 0,
+        inTime: 0,
+        inMeter: 0,
+        inLong: 0,
+        bottomLong: 0,
+        bottomTime: 0,
+        bottomMeter: 0,
+        allLong: 0,
+        flag: 0,
+        count: 0,
+        selectTypes: [],
+        selectTypesArray: [
+          [],[],[],[]
+        ],
+        typeNames: [
+          [],[],[],[]
+        ]
+      };
       return {
-//        titleName:'开单',
-        titleName:'',
+        titleName:'订单名称',
         items: [],
         chooseTittle: '',
-        defaultItem: {
-          upLong: 0,
-          upTime: 0,
-          upMeter: 0,
-          inTime: 0,
-          inMeter: 0,
-          inLong: 0,
-          bottomLong: 0,
-          bottomTime: 0,
-          bottomMeter: 0,
-          allLong: 0,
-          flag: 0,
-          count: 0,
-          selectTypes: []
-        },
+        defaultItem: defaultItem,
+        titleFlag: false,
         modalChoose: false,
-        modelType: 1,
+        modelType: 0,
         hideNumFlag: 0,
         itemTypes: [],
         curIndex: '',
@@ -390,15 +351,18 @@
         phone: '',
         name: '',
         contentId: '',
+        createTime: '',
         reciveTime: '',
+        memo: '',
         prize: 0,
         preMoney: 0,
         restMoney: 0,
-        cutFlag: true,
-        sliceFlag: true,
-        packFlag: true,
+        cutFlag: false,
+        sliceFlag: false,
+        packFlag: false,
         operator: '',
-    }
+        editFlag: 1,
+      }
     },
     props: {
     },
@@ -412,18 +376,6 @@
         },
         deep:true,
       },
-      itemTypes:{
-        handler(){
-          var uidList = [];
-          for (var i in this.itemTypes){
-              if (this.itemTypes[i].checked){
-                uidList.push(this.itemTypes[i].uid);
-              }
-          }
-          this.items[this.curIndex].selectTypes = uidList;
-        },
-        deep:true,
-      }
     },
     created(){
       this.init();
@@ -433,6 +385,9 @@
         var query = this.$route.query;
         if (query.contentId){
           this.contentId = query.contentId;
+        }
+        if (query.hideNumFlag){
+          this.hideNumFlag = query.hideNumFlag;
         }
         if (this.contentId){
           let that = this;
@@ -445,36 +400,70 @@
               that.address = billContent.address;
               that.mobile = billContent.mobile;
               that.phone = billContent.phone;
+              that.memo = billContent.memo;
               that.name = billContent.name;
               that.prize = billContent.prize;
-
+              if (!billContent.titleName){
+                that.titleName = '订单:' + that.contentId;
+              }else{
+                that.titleName = billContent.titleName;
+              }
               if (billContent.reciveTime){
                 that.reciveTime = new Date(billContent.reciveTime);
               }else{
                 that.reciveTime = '';
               }
+              if (billContent.createTime){
+                that.createTime = new Date(billContent.createTime);
+                that.createTime = that.createTime.getFullYear() + '年'
+                  + that.createTime.getMonth() + '月' + that.createTime.getDate() + '日 '
+                  + that.createTime.getHours() + ':' +that.createTime.getMinutes();
+              }else{
+                that.createTime = '';
+              }
               that.preMoney = billContent.preMoney;
               that.restMoney = billContent.restMoney;
-              that.cutFlag = billContent.cutFlag;
-              that.sliceFlag = billContent.sliceFlag;
-              that.packFlag = billContent.packFlag;
+              that.cutFlag = billContent.cutFlag?true:false;
+              that.sliceFlag = billContent.sliceFlag?true:false;
+              that.packFlag = billContent.packFlag?true:false;
               that.operator = billContent.operator;
+              for (var i in result.data.items){
+                result.data.items[i].typeNames =
+                  JSON.parse(JSON.stringify(that.defaultItem.typeNames));
+              }
               that.items = result.data.items;
+              that.initSetTypeNames();
             }else{
-              that.items.push(that.defaultItem);
+              that.items.push(JSON.parse(JSON.stringify(that.defaultItem)));
             }
           });
         }else {
-          this.items.push(this.defaultItem);
+          this.items.push(JSON.parse(JSON.stringify(this.defaultItem)));
         }
       },
       createItem(){
-        this.items.push(this.defaultItem);
+        this.items.push(JSON.parse(JSON.stringify(this.defaultItem)));
+      },
+      removeItem(index){
+        this.items.splice(index, 1);
       },
       comfirmPage(){
         let that = this;
+
+        for (var i in this.items){
+          if (this.items[i].selectTypesArray){
+            this.items[i].selectTypes = [].concat(
+              this.items[i].selectTypesArray[0],
+              this.items[i].selectTypesArray[1],
+              this.items[i].selectTypesArray[2],
+              this.items[i].selectTypesArray[3]
+            );
+          }
+        }
+
         let response = doDataPost('/product/createBill', {
           contentId: this.contentId,
+          memo: this.memo,
           items: this.items,
           address: this.address,
           mobile: this.mobile,
@@ -488,19 +477,41 @@
           sliceFlag: this.sliceFlag,
           packFlag: this.packFlag,
           operator: this.operator,
+          titleName: this.titleName,
         });
         response.then(function (result) {
           that.contentId = result.data.contentId;
-        })
+          that.$message({
+            type: 'success',
+            message: '保存成功!'
+          });
+        });
         this.hideNumFlag = !this.hideNumFlag;
+      },
+      initSetTypeNames(){
+        for(var k in [0, 1, 2, 3]){
+          let that = this;
+          let response = doDataPost('/product/getItemTypes', {
+            type: k,
+          });
+          response.then(function (result) {
+            for (var t in result.data){
+              for (var i in that.items){
+                if (that.items[i].selectTypes.indexOf(result.data[t].uid)!=-1){
+                  that.items[i].typeNames[result.data[t].type].push(result.data[t].name);
+                }
+              }
+            }
+          });
+        }
       },
       duringGetTypes(index, modelType){
         this.modelType = modelType;
         switch (modelType){
-          case 1:this.chooseTittle = '轨道配件';break;
-          case 2:this.chooseTittle = '天花板配件';break;
-          case 3:this.chooseTittle = '布料类型';break;
-          case 4:this.chooseTittle = '纱布类型';break;
+          case 0:this.chooseTittle = '轨道配件';break;
+          case 1:this.chooseTittle = '天花板配件';break;
+          case 2:this.chooseTittle = '布料类型';break;
+          case 3:this.chooseTittle = '纱布类型';break;
         }
         this.curIndex = index;
         this.modalChoose = true;
@@ -508,11 +519,24 @@
         let that = this;
         let response = doDataPost('/product/getItemTypes', {
           type: this.modelType,
+          exist: 1,
         });
         response.then(function (result) {
-          for (var i in result.data){
-            if (that.items[that.curIndex].selectTypes.indexOf(result.data[i].uid) != -1){
-              result.data[i].checked = true;
+          if (that.items[that.curIndex].selectTypesArray){
+            for (var i in result.data){
+              if (that.items[that.curIndex].selectTypesArray[that.modelType].indexOf(result.data[i].uid) != -1){
+                result.data[i].checked = true;
+              }else{
+                result.data[i].checked = false;
+              }
+            }
+          }else{
+            for (var i in result.data){
+              if (that.items[that.curIndex].selectTypes.indexOf(result.data[i].uid) != -1){
+                result.data[i].checked = true;
+              }else{
+                result.data[i].checked = false;
+              }
             }
           }
           that.itemTypes = result.data;
@@ -522,9 +546,12 @@
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         var r = str.match(reg);
         if(r!=null)return  unescape(r[2]); return null;
-      }
+      },
+      showTitle(){
+        this.titleFlag = !this.titleFlag;
+      },
     },
-    components:{headTop, chooseContent, calendar},
+    components:{headTop, chooseContent},
   }
 </script>
 

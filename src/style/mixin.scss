@@ -48,3 +48,7 @@ $fcolor:#ffcc00;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $num;
 }
+
+.clearfix{
+  clear: both;
+}

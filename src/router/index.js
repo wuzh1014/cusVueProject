@@ -4,6 +4,8 @@ import App from '../App'
 var main = r => require.ensure([], () => r(require('@/components/main/main')), 'main')
 var paper = r => require.ensure([], () => r(require('@/components/paper/paper')), 'paper')
 var billList = r => require.ensure([], () => r(require('@/components/paper/billList')), 'billList')
+var typeList = r => require.ensure([], () => r(require('@/components/paper/typeList')), 'typeList')
+var detailList = r => require.ensure([], () => r(require('@/components/paper/detailList')), 'detailList')
 
 var homes = r => require.ensure([], () => r(require('@/components/home/homes')), 'homes')
 var carousel = r => require.ensure([], () => r(require('@/components/carousel/carousel')), 'carousel')
@@ -43,10 +45,14 @@ const routes = [
       {
         path: '/billList',
         component: billList,
+      },
+      {
+        path: '/typeList',
+        component: typeList,
         children:[
           {
-            path: 'item',
-            component: billList
+            path: 'detailList',
+            component: detailList
           },
           {
             path: 'items',

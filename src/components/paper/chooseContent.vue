@@ -1,12 +1,15 @@
 <template>
-  <div style="text-align:center;">
-    <p>{{chooseContent}}</p>
-    <at-checkbox-group>
-      <at-checkbox :label="item.name" :key="item.id"
-                   v-model="item.checked" v-for="(item, index) in itemTypes">
-        {{item.name}}
-      </at-checkbox>
-    </at-checkbox-group>
+  <div>
+    <el-checkbox
+      size="mini"
+      border
+      :label="item.name"
+      :key="index"
+      v-model="item.checked"
+      @change="changeChecked"
+      v-for="(item, index) in itemTypes">
+      {{item.name}}
+    </el-checkbox>
   </div>
 </template>
 <style scoped lang="scss">
@@ -16,7 +19,11 @@
   export default {
     name: 'chooseContent',
     data () {
+      const selectTypesArray = [
+        [],[],[],[]
+      ];
       return {
+        selectTypesArray: selectTypesArray,
         titleName:'',
         chooseContent:'',
       }
@@ -26,10 +33,25 @@
         type: Number
       },
       itemTypes: {},
+      items: {},
+      curIndex: {},
     },
     methods: {
-      changeGroup(value) {
-          console.info(value)
+      changeChecked() {
+        if (!this.items[this.curIndex].selectTypesArray){
+          this.items[this.curIndex].selectTypesArray =
+            JSON.parse(JSON.stringify(this.selectTypesArray));
+        }
+        var typesArray = [];
+        var namesArray = [];
+        for (let i in this.itemTypes){
+          if (this.itemTypes[i].checked){
+            typesArray.push(this.itemTypes[i].uid);
+            namesArray.push(this.itemTypes[i].name);
+          }
+        }
+        this.items[this.curIndex].selectTypesArray[this.modelType] = typesArray;
+        this.items[this.curIndex].typeNames[this.modelType] = namesArray;
       },
     },
   }

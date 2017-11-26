@@ -1,9 +1,19 @@
 <template>
-    <section id='head' class="head-other">
-      <div class="head-back" @click="routerto"><i class="icon icon-chevron-left"></i></div>
-      <div class="head-title">{{headTitle}}</div>
-      <div class="head-go" @click="comfirmPage"><i class="icon icon-chevron-right"></i></div>
-    </section>
+  <el-header>
+    <el-row class="head-other" @click="showTitle">
+      <div class="head-back">
+        <el-button type="primary" round @click="routerto">返回</el-button>
+      </div>
+      <div class="head-title" @click="showTitle">{{headTitle}}</div>
+      <div class="head-go">
+        <el-button v-if="hideNumFlag==0" type="success" round @click="comfirmPage">保存</el-button>
+        <el-button v-if="hideNumFlag==1" type="danger" round @click="printPaper">打印</el-button>
+        <el-button v-if="hideNumFlag==1" type="info" round @click="comfirmPage">编辑</el-button>
+        <el-button v-if="hideNumFlag==1" type="success" round @click="toList">订单列表</el-button>
+        <el-button v-if="addTypeFlag==1" type="info" round @click="comfirmPage">新增</el-button>
+      </div>
+    </el-row>
+  </el-header>
 </template>
 
 <script>
@@ -13,13 +23,27 @@
         return {
         }
       },
-      props: ['headTitle'],
+      props: [
+        'headTitle',
+        'hideNumFlag',
+        'addTypeFlag'],
       methods: {
-        routerto(){
+        routerto(e){
           this.$router.go(-1)
         },
-        comfirmPage(){
+        comfirmPage(e){
           this.$emit('comfirmPage')
+        },
+        showTitle(e){
+          if(!this.hideNumFlag){
+            this.$emit('showTitle')
+          }
+        },
+        printPaper(){
+          window.print()
+        },
+        toList(){
+          this.$router.push('/billList');
         },
       }
     }
@@ -30,26 +54,23 @@
   @import '../../style/mixin';
   .head-other{
     position: fixed;
-    z-index: 0;
+    z-index: 2;
     left: 0;
     top: 0;
-    @include wh(100%, 1.093333rem);
+    width: 100%;
+    height: 60px;
     line-height: 1.093333rem;
-    display: flex;
+    background-color: #ECF5FD;
+    text-align: center;
+
+    el-button{
+      font-size: 15px;
+    }
     head-base{
-      cursor: pointer;
-      background-color: #66ff99;
-      border-radius: 45px;
-      @include wh(0.8rem, 0.8rem);
-      position: absolute;
-      top: 50%;
-      transform: translate(0%, -50%);
-      i{
-        color:#fff;
-        @include center;
-        font-size:30px;
-        font-weight: bold;
-      }
+      position: fixed;
+      top: 10px;
+      display: inline-block;
+      line-height: 0.5rem;
     }
     .head-back{
       @extend head-base;
@@ -60,12 +81,13 @@
       right: 10px;
     }
     .head-title{
-      flex: 1;
-      height:1.093333rem;
-      text-align: center;
+      min-height: 28px;
+      min-width: 400px;
+      line-height: 28px;
+      display: inline-block;
       color:#000;
-      @include ellipsis(1);
-      font-size:35px;
+      font-size: 30px;
+      cursor: pointer;
     }
   }
 </style>

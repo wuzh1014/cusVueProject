@@ -1,62 +1,71 @@
 <template>
   <div class="home">
-    <section class="topicbox">
-      <div class="category" @click="toPaper">
-        <label>开单</label>
-        <span class="title">开单</span>
-      </div>
-      <div class="category" @click="toBillList">
-        <label>订单</label>
-        <span class="title">订单列表</span>
-      </div>
-      <div class="category" @click="toItem">
-        <label>配件</label>
-        <span class="title">添加配件</span>
-      </div>
-      <div class="category" @click="toSetting">
-        <label>设置</label>
-        <span class="title">设置</span>
-      </div>
-    </section>
-
-    <!--<transition name="backtop">-->
-      <!--<div class="to-top" @click="backTop" v-if="showBackStatus"></div>-->
-    <!--</transition>-->
+    <el-carousel
+      indicator-position="outside"
+      :interval="10000"
+      type="card">
+      <el-carousel-item :class="item.class" v-for="(item, index) in picList" :key="index">
+      </el-carousel-item>
+    </el-carousel>
+    <el-row>
+      <el-col :span="6" v-for="(menu, index) in menuList" :key="index" :offset="index>0?2:1">
+        <el-card :body-style="{ padding: '0px' }">
+          <div :class="menu.color" @click="toLink(index)">
+            <label>{{menu.name}}</label>
+          </div>
+          <div style="padding: 14px;">
+            <span>{{menu.fullname}}</span>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
     <transition :name="transitionName" >
       <router-view></router-view>
     </transition>
   </div>
 </template>
 <script>
-
-import newslist from '@/components/commen/newslist'
 import loading from '@/components/commen/loading'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import {swiper, swiperSlide} from 'vue-awesome-swiper'
 import infiniteScroll from 'vue-infinite-scroll'
-import {getnews} from '@/service/getData'
 import {dealurl, showBack, animate} from '@/config/mUtils'
-
 export default {
   name: 'main',
   data () {
     return {
-      swiper: [],
-      news: [],
-      topic:[],
-      page:1,
+      picList: [
+        {
+          class: "item1"
+        },
+        {
+          class: "item2"
+        },
+        {
+          class: "item3"
+        },
+      ],
+      menuList: [
+        {
+          name: '开单',
+          color: 'rred',
+          fullname: '创建订单'
+        },
+        {
+          name: '订单',
+          color: 'ggreen',
+          fullname: '订单列表'
+        },
+        {
+          name: '配件',
+          color: 'bblue',
+          fullname: '配件管理'
+        },
+//        {
+//          name: '设置',
+//          fullname: '设置'
+//        },
+      ],
+      currentDate: new Date(),
       busy: true,
-      loadernone:false,
-      swiperOption: {
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        spaceBetween: 30,
-        centeredSlides: true,
-        autoplay: 3000,
-        perspective:15,
-        autoplayDisableOnInteraction: false,
-        notNextTick: true
-      },
       showBackStatus:false,
       transitionName:'router-slide'
     }
@@ -71,60 +80,22 @@ export default {
   },
   methods: {
     async init() {
-      let response = await getnews('TY43,FOCUSTY43,TYTOPIC',this.page++,'5.4.0');
-      response.data.forEach((obj, index) => {
-        if (obj.item){
-          let type = obj.type;
-          if (type == 'focus') {
-            this.swiper = obj.item
-          }else if (type == 'list') {
-            this.news = obj
-          }else if (type == 'tytopic') {
-            this.topic = obj
-          }
-        }
-      })
-      this.busy = false;
     },
-    async loadMore(){
-      this.busy = true;
-      this.loadernone = false;
-      if(this.page <= this.news.totalPage){
-        let response = await getnews('TY43',this.page++,'5.4.0');
-        this.news.item = [...this.news.item,...response.data[0].item];
-      }else{
-        this.loadernone = true;
-        return false
+    toLink(index){
+      switch (index){
+        case 0:
+          this.$router.push({path: '/main/paper', query:{hideNumFlag: 0}});
+          break;
+        case 1:
+          this.$router.push('/billList');
+          break;
+        case 2:
+          this.$router.push('/typeList')
+          break;
+        case 3:break;
       }
-      this.busy = false;
-    },
-    toPaper(){
-      this.$router.push('/main/paper')
-    },
-    toBillList(){
-      this.$router.push('/billList')
-    },
-    toItem(){
-      this.$router.push('/main/item')
-    },
-    toSetting(){
-      this.$router.push('/main/setting')
-    },
-    toCarousel(params){
-      if(params.indexOf(".com/")>0){
-        this.$router.push('/homes/carousel?'+dealurl(params))
-      }else{
-        this.$router.push('/homes/carousel?'+params)
-      }
-    },
-    toArticle(params){
-      this.$router.push('/homes/article?'+params)
-    },
-    toVideo(params){
-      this.$router.push('/homes/video?'+params)
-    },
-    toTopic(params){
-      this.$router.push('/topic?'+dealurl(params))
+
+
     },
     backTop(){
       animate(document.body, {scrollTop: '0'}, 400,'ease-out');
@@ -132,12 +103,12 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.transitionName = to.path.indexOf("video")>0 ? 'router-right' : 'router-slide'
+//      to.path 'router-slide' right
+      this.transitionName = 'router-slide';
     }
   },
   directives: {infiniteScroll},
-
-  components:{swiper, swiperSlide, newslist, loading}
+  components:{loading}
 }
 </script>
 
@@ -146,82 +117,50 @@ export default {
 .home{
   width: 100%;
 }
-/*.swiper-wrap {*/
-  /*height: 360px;*/
-  /*width: 100%;*/
-  /*position: relative;*/
-  /*img {*/
-    /*height: 100%;*/
-    /*width: 100%;*/
-  /*}*/
-  /*.title{*/
-      /*position: absolute;*/
-      /*bottom: 0;*/
-      /*left: 0.266667rem;*/
-      /*font-size:16px; !*px*!*/
-      /*color: #fff;*/
-  /*}*/
-/*}*/
-.topicbox{
-  padding: 0 0.266667rem;
-  margin: 0.533333rem 0 0.133333rem;
-  display: flex;
-  justify-content: space-between;
-  .category{
-    cursor: pointer;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    label{
-      cursor: pointer;
-      height: 100px;
-      width: 100px;
-      border-radius: 50px;
-      line-height: 100px;
-      font-size: 30px;
-      text-align: center;
-      color: white;
-    }
-  }
-  .category:nth-of-type(1){
-    label{
-      background-color: #FF3131;
-    }
-  }
-  .category:nth-of-type(2){
-    label{
-      background-color: #FFB41B;
-    }
-  }
-  .category:nth-of-type(3){
-    label{
-      background-color: #5B89F8;
-    }
-  }
-  .category:nth-of-type(4){
-    label{
-      background-color: #0BBC49;
-    }
-  }
-  /*img{*/
-    /*@include wh(1.786667rem,1.386667rem)*/
-  /*}*/
-  .title{
-    line-height: 0.8rem;
-    font-size:16px; /*px*/
-  }
+.item1{
+  background:url('../../assets/img/1.jpg')no-repeat;
+  background-size:100%;
 }
-/*.to-top{*/
-  /*position: fixed;*/
-  /*top: 80%;*/
-  /*left: 90%;*/
-  /*transform: translate(-80%, -90%);*/
-  /*width:1rem;*/
-  /*height:1rem;*/
-  /*background:url('../../assets/img/top.png')no-repeat;*/
-  /*background-size: 100% 100%;*/
-  /*background-color: #fff;*/
-  /*border-radius: 1rem;*/
-/*}*/
+.item2{
+  background:url('../../assets/img/2.jpg')no-repeat;
+  background-size:100%;
+}
+.item3{
+  background:url('../../assets/img/3.jpg')no-repeat;
+  background-size:100%;
+}
+
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
+
+colorBase{
+  width: 100%;
+  display: block;
+  text-align: center;
+  line-height: 15vw;
+  label{
+    font-size: 38px;
+    color: white;
+  }
+  left: 10px;
+}
+.rred{
+  @extend colorBase;
+  background-color: #FFA4A4;
+}
+.ggreen{
+  @extend colorBase;
+  background-color: #89E7B3;
+}
+.bblue{
+  @extend colorBase;
+  background-color: #B0C8F4;
+}
 </style>

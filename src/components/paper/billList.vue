@@ -1,21 +1,29 @@
 <template>
   <div class="billList">
-    <headTop :headTitle="titleName" ></headTop>
+    <headTop :headTitle="titleName"></headTop>
     <div class="box">
-      <div class="container-fluid">
-        <el-table :data="billList" @row-click="toPaper" style="width: 100%">
-          <el-table-column prop="uid" label="编号"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="150"></el-table-column>
-          <el-table-column prop="address" label="地址"></el-table-column>
-          <el-table-column prop="phone" label="手机"></el-table-column>
-          <el-table-column prop="prize" label="合计"></el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <at-button size="mini" @click="deleteBill($event, scope.row.uid)">删除</at-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+      <el-table :data="billList" @row-click="toPaper" style="width: 100%">
+        <el-table-column prop="uid" label="订单号"></el-table-column>
+        <el-table-column prop="titleName" label="订单名称"></el-table-column>
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="phone" label="手机"></el-table-column>
+        <el-table-column prop="prize" label="合计"></el-table-column>
+        <el-table-column prop="createTime" label="开单时间" width="200"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button size="mini"@click="deleteBill($event, scope.row.uid)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        :page-size="pageSize"
+        :page-count="pageCount"
+        :current-page="current"
+        layout="prev, pager, next"
+        @current-change="currentChange"
+        :total="pageTotal">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -34,21 +42,23 @@
       width: 100%;
       height: 100%;
       overflow: auto;
-      padding-top: 1.093333rem;
     }
   }
 </style>
 <script>
   import headTop from '@/components/paper/head'
-  import VueAwesomeSwiper from 'vue-awesome-swiper'
   import {doDataPost} from '@/service/getData'
 
   export default {
     name: 'billList',
     data () {
       return {
-        titleName:'',
+        titleName:'订单列表',
         billList: [],
+        pageSize: 10,
+        current: 1,
+        pageCount: 0,
+        pageTotal: 0,
       }
     },
     watch: {
@@ -59,29 +69,65 @@
     methods: {
       async getBillList() {
         let that = this;
-        let response = doDataPost('/product/getBillList', {});
+        let response = doDataPost('/product/getBillList', {
+          pageTotal: this.pageTotal,
+          pageSize: this.pageSize,
+          current: this.current,
+        });
         response.then(function (result) {
-          that.billList = result.data;
+          if (result.data.code){
+            var billList = result.data.billList;
+            for (var i in billList){
+              if (billList[i].createTime){
+                billList[i].createTime = new Date(billList[i].createTime);
+                billList[i].createTime = billList[i].createTime.getFullYear() + '年'
+                + billList[i].createTime.getMonth() + '月' + billList[i].createTime.getDate() + '日 '
+                + billList[i].createTime.getHours() + ':' +billList[i].createTime.getMinutes();
+              }else{
+                billList.createTime = '';
+              }
+            }
+            that.billList = billList;
+            that.pageTotal = result.data.count;
+          }
         });
       },
       async deleteBill(e, contentId) {
         e.stopPropagation();
-        let that = this;
-        let response = doDataPost('/product/deleteBillPhy', {
-          uid: contentId
-        });
-        response.then(function (result) {
-          if (result.data.code){
-            that.getBillList();
-          }
+        this.$confirm('此操作将删除该订单, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let that = this;
+          let response = doDataPost('/product/deleteBillPhy', {
+            uid: contentId
+          });
+          response.then(function (result) {
+            if (result.data.code){
+              that.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              that.getBillList();
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
         });
       },
       toPaper(row){
-        this.$router.push({path: '/main/paper', query:{contentId: row.uid}});
+        this.$router.push({path: '/main/paper', query:{contentId: row.uid,hideNumFlag: 1}});
+      },
+      currentChange(value){
+        this.current = value;
+        this.getBillList();
       },
     },
     components:{headTop},
-
   }
 </script>
 
