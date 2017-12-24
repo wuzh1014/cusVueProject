@@ -5,30 +5,13 @@
  * routerMode: 路由模式
  *
  */
-let iclienturl;
-let ifeng3gurl;
 let routerMode;
-let commenturl;
-
-let getUpItemUrl = '';
-let getMidItemUrl = '';
-let getBottomItemUrl = '';
 
 if (process.env.NODE_ENV == 'development') {
-  iclienturl = 'iclient/';
-  ifeng3gurl = 'ifeng3g/';
-  commenturl = 'comment';
   routerMode = 'hash';
 }else{
-  iclienturl = 'https://api.iclient.ifeng.com/';
-  ifeng3gurl = 'https://api.3g.ifeng.com/';
-  commenturl = 'http://comment.ifeng.com/';
   routerMode = 'hash';
 }
-
 export {
-	iclienturl,
-  ifeng3gurl,
 	routerMode,
-  commenturl
 }

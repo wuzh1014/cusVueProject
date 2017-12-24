@@ -7,12 +7,6 @@ var billList = r => require.ensure([], () => r(require('@/components/paper/billL
 var typeList = r => require.ensure([], () => r(require('@/components/paper/typeList')), 'typeList')
 var detailList = r => require.ensure([], () => r(require('@/components/paper/detailList')), 'detailList')
 
-var homes = r => require.ensure([], () => r(require('@/components/home/homes')), 'homes')
-var carousel = r => require.ensure([], () => r(require('@/components/carousel/carousel')), 'carousel')
-var article = r => require.ensure([], () => r(require('@/components/article/article')), 'article')
-var video = r => require.ensure([], () => r(require('@/components/video/video')), 'video')
-var topic = r => require.ensure([], () => r(require('@/components/topic/topic')), 'topic')
-var comment = r => require.ensure([], () => r(require('@/components/comment/comment')), 'comment')
 Vue.use(Router)
 
 const routes = [
@@ -53,57 +47,9 @@ const routes = [
           {
             path: 'detailList',
             component: detailList
-          },
-          {
-            path: 'items',
-            component: paper
-          },
-          {
-            path: 'setting',
-            component: paper
           }
         ]
       },
-      {
-        path: '/homes',
-        component: homes,
-        children:[
-          {
-            path: 'carousel',
-            component: carousel,
-          },
-          {
-            path: 'article',
-            component: article,
-          },
-          {
-            path: 'video',
-            component: video,
-          },
-        ]
-      },
-      {
-        path: '/topic',
-        component: topic,
-        children:[
-        {
-          path: 'carousel',
-          component: carousel,
-        },
-        {
-          path: 'article',
-          component: article,
-        },
-        {
-          path: 'video',
-          component: video,
-        }
-        ]
-      },
-      {
-        path: '/comment',
-        component: comment,
-      }
       ]
     }
 ];

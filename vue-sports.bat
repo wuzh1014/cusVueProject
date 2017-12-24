@@ -1,1 +1,1 @@
-npm start
+cnpm start
