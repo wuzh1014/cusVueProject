@@ -25,7 +25,6 @@
   </div>
 </template>
 <script>
-//import loading from '@/components/commen/loading'
 import infiniteScroll from 'vue-infinite-scroll'
 import {dealurl, showBack, animate} from '@/config/mUtils'
 export default {

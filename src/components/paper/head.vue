@@ -34,14 +34,15 @@
         comfirmPage(e){
           this.$emit('comfirmPage')
         },
+        printPaper(e){
+          this.$emit('printPaper')
+        },
         showTitle(e){
           if(!this.hideNumFlag){
             this.$emit('showTitle')
           }
         },
-        printPaper(){
-          window.print()
-        },
+
         toList(){
           this.$router.push('/billList');
         },

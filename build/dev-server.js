@@ -13,7 +13,6 @@ var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
 var bodyParser = require('body-parser');
 
-
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
@@ -69,7 +68,6 @@ app.use(bodyParser.json({limit: '10mb'}));  //body-parser 解析json格式数据
 app.use(bodyParser.urlencoded({            //此项必须在 bodyParser.json 下面,为参数编码
   extended: true
 }));
-
 var uri = 'http://localhost:' + port
 // var uri = 'http://127.0.0.1:' + port
 
