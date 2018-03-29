@@ -6,7 +6,7 @@
         <el-table-column prop="name" label="名称"></el-table-column>
         <el-table-column prop="memo" label="备注"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
-        <!--<el-table-column prop="prize" label="价格"></el-table-column>-->
+        <el-table-column prop="prize" label="单价"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini" @click="deleteItemType($event, scope.row.uid)">删除</el-button>

@@ -15,8 +15,6 @@
           :orderDetail="orderDetail"
         ></paperTop>
 
-
-
         <paperItem :items="items"
                    :itemAttrs="itemAttrs"
                    :itemTypes="itemTypes"
@@ -30,11 +28,9 @@
           :orderDetail="orderDetail"
         ></paperBottom>
 
-
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
       </el-main>
     </el-container>
-
 
     <el-dialog
       :title="itemAttrs.chooseTittle"
@@ -48,7 +44,6 @@
         <el-button type="primary" @click="itemAttrs.modalChoose=!itemAttrs.modalChoose">确 定</el-button>
       </span>
     </el-dialog>
-
 
     <el-dialog
       title="修改订单名称"
@@ -221,9 +216,9 @@
               }
               that.orderDetail.preMoney = billContent.preMoney;
               that.orderDetail.restMoney = billContent.restMoney;
-              that.orderDetail.cutFlag = billContent.cutFlag?true:false;
-              that.orderDetail.sliceFlag = billContent.sliceFlag?true:false;
-              that.orderDetail.packFlag = billContent.packFlag?true:false;
+              that.orderDetail.cutFlag = !!billContent.cutFlag;
+              that.orderDetail.sliceFlag = !!billContent.sliceFlag;
+              that.orderDetail.packFlag = !!billContent.packFlag
               that.orderDetail.operator = billContent.operator;
               for (var i in result.data.items){
                 result.data.items[i].typeNames =

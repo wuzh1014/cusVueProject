@@ -39,7 +39,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
     "cssnano": "^3.10.0",
-    "electron": "^1.7.9",
+    "electron": "^1.8.4",
     "electron-packager": "^10.1.0",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.14.1",

@@ -144,10 +144,18 @@
       duringGetTypes(index, modelType){
         this.itemAttrs.modelType = modelType;
         switch (modelType){
-          case 0:this.itemAttrs.chooseTittle = '轨道配件';break;
-          case 1:this.itemAttrs.chooseTittle = '天花板配件';break;
-          case 2:this.itemAttrs.chooseTittle = '布料类型';break;
-          case 3:this.itemAttrs.chooseTittle = '纱布类型';break;
+          case 0:this.itemAttrs.chooseTittle = '轨道配件';
+
+          break;
+          case 1:this.itemAttrs.chooseTittle = '天花板配件';
+
+          break;
+          case 2:this.itemAttrs.chooseTittle = '布料类型';
+
+          break;
+          case 3:this.itemAttrs.chooseTittle = '纱布类型';
+
+          break;
         }
         this.itemAttrs.curIndex = index;
         this.itemAttrs.modalChoose = true;
