@@ -1,8 +1,8 @@
 {
-  "name": "vue-cusproject",
+  "name": "cusVueproject",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "crli",
+  "description": "cusVueproject",
+  "author": "wuzh1014",
   "main": "build/electron.js",
   "private": true,
   "scripts": {
