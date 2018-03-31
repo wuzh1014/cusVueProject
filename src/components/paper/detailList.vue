@@ -15,25 +15,20 @@
       </el-table>
     </div>
 
-
     <el-dialog
       :title="chooseTittle + titleName"
       :visible.sync="modalChoose" append-to-body center>
 
-
       <addTypeContent
         :addContent="addContent"
         :type="type"></addTypeContent>
-
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="modalChoose=!modalChoose">取 消</el-button>
         <el-button type="primary" @click="confirmAddFrame">确 定</el-button>
       </span>
 
-
     </el-dialog>
-
 
   </div>
 </template>
@@ -95,7 +90,6 @@
           exist: 1,
         });
         response.then(function (result) {
-
           for (var i in result.data){
             if (result.data[i].createTime){
               result.data[i].createTime = new Date(result.data[i].createTime);
@@ -106,7 +100,6 @@
               result.data[i].createTime = '';
             }
           }
-
           that.detailList = result.data;
         });
       },

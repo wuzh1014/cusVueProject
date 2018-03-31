@@ -20,6 +20,7 @@
                    :itemTypes="itemTypes"
                    :defaultItem="defaultItem"
                    :countAttrs="countAttrs"
+                   :orderDetail="orderDetail"
                    ></paperItem>
 
         <paperBottom
@@ -112,17 +113,21 @@
         allLong: 0,
         flag: 0,
         count: 0,
+        needHead: 1,
         selectTypes: [],
         selectTypesArray: [
           [],[],[],[]
         ],
         typeNames: [
           [],[],[],[]
+        ],
+        typePrizes: [
+          [],[],[],[]
         ]
       };
       return {
         titleName:'订单名称',
-        initItemSize: 8,
+        initItemSize: 7,
         items: [],
         defaultItem: defaultItem,
         titleFlag: false,
@@ -172,7 +177,7 @@
         let bdhtml = window.document.body.innerHTML;
         window.document.body.innerHTML = $(".el-main").html();
         window.print();
-        window.document.body.innerHTML = bdhtml;
+        window.location.reload();
       },
       async init() {
         var query = this.$route.query;
@@ -221,8 +226,8 @@
               that.orderDetail.packFlag = !!billContent.packFlag
               that.orderDetail.operator = billContent.operator;
               for (var i in result.data.items){
-                result.data.items[i].typeNames =
-                  JSON.parse(JSON.stringify(that.defaultItem.typeNames));
+                result.data.items[i].typeNames = JSON.parse(JSON.stringify(that.defaultItem.typeNames));
+                result.data.items[i].typePrizes = JSON.parse(JSON.stringify(that.defaultItem.typePrizes));
               }
               that.items = result.data.items;
               that.initSetTypeNames();
@@ -288,6 +293,7 @@
               for (var i in that.items){
                 if (that.items[i].selectTypes.indexOf(result.data[t].uid)!=-1){
                   that.items[i].typeNames[result.data[t].type].push(result.data[t].name);
+                  that.items[i].typePrizes[result.data[t].type].push(result.data[t].prize);
                 }
               }
             }

@@ -9,9 +9,12 @@
 
     <el-row>
       <el-col :span="24" v-if="!itemAttrs.hideNumFlag">
-        <el-col :span="24">
+        <el-col :span="7">
           <el-button @click="duringGetTypes(index, 0)"
                      size="mini" type="success" plain>轨道</el-button>
+        </el-col>
+        <el-col class="selectLabel" :span="12" v-if="item.typeNames[0].length > 0">
+          <span v-for="iname in item.typeNames[0]">{{iname}},</span>
         </el-col>
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
         <el-col :span="6">
@@ -29,33 +32,28 @@
       </el-col>
 
       <el-col :span="24" v-else>
-        <el-col :span="24">
+        <el-col :span="13">
           <b>轨道 : </b>
           <span>{{item.upLong}}</span>
           <span>米 x </span>
           <span>{{item.upTime}}</span>
         </el-col>
+        <el-col class="showLabel" :span="11" v-if="item.typeNames[0].length > 0">
+          <span v-for="iname in item.typeNames[0]">{{iname}},</span>
+        </el-col>
       </el-col>
 
-      <el-col :span="24" v-if="item.typeNames[0].length>0">
-        <span>(</span>
-        <span v-for="iname in item.typeNames[0]">{{iname}} </span>
-        <span>)</span>
-      </el-col>
 
       <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
-      <el-col :span="24">
+      <el-col :span="7">
         <el-button v-if="!itemAttrs.hideNumFlag" @click="duringGetTypes(index, 1)"
                    size="mini" type="success" plain>天花</el-button>
         <b v-else>天花 : </b>
-        <span v-if="item.typeNames[1].length>0">
-                  <span>(</span>
-                  <span v-for="iname in item.typeNames[1]"> {{iname}} </span>
-                  <span>)</span>
-                </span>
       </el-col>
-
+      <el-col class="selectLabel" :span="12" v-if="item.typeNames[1].length > 0">
+        <span v-for="iname in item.typeNames[1]">{{iname}},</span>
+      </el-col>
       <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
       <el-col :span="6" v-if="!itemAttrs.hideNumFlag">
@@ -81,13 +79,21 @@
       </el-col>
 
       <el-col :span="14" class="redCircle">
-        <el-col :span="24" class="topSet">
-          <el-col :key="i" v-for="i in 6" :span="4" class="topSetItem"></el-col>
+        <el-col :span="24" class="topSet" v-if="item.needHead" >
+          <el-col :key="i" v-for="i in 6" :span="4">
+            <div class="topSetItem" @click="item.needHead=!item.needHead"></div>
+          </el-col>
+        </el-col>
+        <el-col v-else :span="24">
+          <div class="clearfix" style="height: 22px" @click="item.needHead=!item.needHead"></div>
         </el-col>
 
         <el-col :span="24" v-if="!itemAttrs.hideNumFlag">
-          <el-col :span="24">
+          <el-col :span="9">
             <el-button @click="duringGetTypes(index, 2)" size="mini" type="success" plain>布</el-button>
+          </el-col>
+          <el-col class="selectLabel" :span="12" v-if="item.typeNames[2].length > 0">
+            <span v-for="iname in item.typeNames[2]">{{iname}},</span>
           </el-col>
           <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
           <el-col :span="9">
@@ -100,26 +106,26 @@
         </el-col>
 
         <el-col :span="24" v-else>
-          <el-col :span="24">
+          <el-col :span="13">
             <b>布</b>
             <span>{{item.inLong}}</span>
             <span>x</span>
             <span>{{item.inTime}}</span>
             <span>={{item.inMeter}}</span>
           </el-col>
+          <el-col class="selectLabel" :span="11" v-if="item.typeNames[2].length > 0">
+            <span v-for="iname in item.typeNames[2]">{{iname}},</span>
+          </el-col>
         </el-col>
 
 
-        <!--<el-col :span="24" v-if="item.typeNames[2].length>0">-->
-          <!--<span>(</span>-->
-          <!--<span v-for="iname in item.typeNames[2]"> {{iname}} </span>-->
-          <!--<span>)</span>-->
-        <!--</el-col>-->
-
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
         <el-col :span="24" v-if="!itemAttrs.hideNumFlag">
-          <el-col :span="24">
+          <el-col :span="9">
             <el-button @click="duringGetTypes(index, 3)" size="mini" type="success" plain>纱</el-button>
+          </el-col>
+          <el-col class="selectLabel" :span="12" v-if="item.typeNames[3].length > 0">
+            <span v-for="iname in item.typeNames[3]">{{iname}},</span>
           </el-col>
           <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
           <el-col :span="9">
@@ -132,22 +138,17 @@
         </el-col>
 
         <el-col :span="24" v-else>
-          <el-col :span="24">
+          <el-col :span="13">
             <b>纱</b>
             <span>{{item.bottomLong}}</span>
             <span>x</span>
             <span>{{item.bottomTime}}</span>
             <span>={{item.bottomMeter}}</span>
           </el-col>
+          <el-col class="selectLabel" :span="11" v-if="item.typeNames[3].length > 0">
+            <span v-for="iname in item.typeNames[3]">{{iname}},</span>
+          </el-col>
         </el-col>
-
-        <!--<el-col :span="24" v-if="item.typeNames[3].length>0">-->
-          <!--<span>(</span>-->
-          <!--<span v-for="iname in item.typeNames[3]"> {{iname}} </span>-->
-          <!--<span>)</span>-->
-        <!--</el-col>-->
-
-
       </el-col>
 
       <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
@@ -174,7 +175,6 @@
       <!--<i class="el-icon-plus" @click="createItem()"></i>-->
     <!--</el-card>-->
 
-
 </template>
 <style scoped lang="scss">
   @import '../../style/mixin';
@@ -199,7 +199,14 @@
     line-height: 22px;
     padding-left: 5px;
   }
-
+  .selectLabel{
+    font-size: 10px;
+    line-height: 14px;
+  }
+  .showLabel{
+    font-size: 10px;
+    line-height: 13px;
+  }
   .item-box{
     font-size: 7px;
     height: auto;

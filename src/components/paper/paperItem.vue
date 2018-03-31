@@ -12,6 +12,7 @@
                v-if="index < 4"
                :key="index"
     ></paperMinItem>
+    <el-col :span="24" class="clearfix" style="height: 1px"></el-col>
     <el-col :span="6">
       <paperMinItem
         :spanSize="24"
@@ -104,22 +105,42 @@
           let allAllLong = 0;
           let allCount = 0;
           let allFlag = 0;
+          let allPrize = 0;
           for (let i in this.items){
             this.items[i].bottomMeter = this.items[i].bottomLong * parseInt(this.items[i].bottomTime);
             this.items[i].inMeter = this.items[i].inLong * parseInt(this.items[i].inTime);
 
-            allUpLong += this.items[i].upLong * parseInt(this.items[i].upTime);
-            allUpTime += parseInt(this.items[i].upTime);
+            let eachPrize = 0;
 
+            let upTime = parseInt(this.items[i].upTime);
+            let eachUpLong = this.items[i].upLong * upTime;
+            allUpLong += eachUpLong;
+            allUpTime += upTime;
             allInMeter += this.items[i].inMeter;
             allInTime += parseInt(this.items[i].inTime);
 
+
+
             allBottomMeter += this.items[i].bottomMeter;
             allBottomTime += parseInt(this.items[i].bottomTime);
-
             allAllLong += this.items[i].allLong;
             allCount += parseInt(this.items[i].count);
             allFlag += parseInt(this.items[i].flag);
+
+
+            if (this.items[i].typePrizes){
+              if (this.items[i].typePrizes[0].length > 0){
+                eachPrize += this.items[i].typePrizes[0][0] * eachUpLong;
+              }
+              if (this.items[i].typePrizes[1].length > 0){
+                eachPrize += this.items[i].typePrizes[2][0] * this.items[i].inMeter;
+              }
+              if (this.items[i].typePrizes[1].length > 0){
+                eachPrize += this.items[i].typePrizes[3][0] * this.items[i].bottomMeter;
+              }
+            }
+
+            allPrize += eachPrize * parseInt(this.items[i].count);
           }
           this.countAttrs.allUpLong = allUpLong;
           this.countAttrs.allUpTime = allUpTime;
@@ -130,6 +151,7 @@
           this.countAttrs.allAllLong = allAllLong;
           this.countAttrs.allCount = allCount;
           this.countAttrs.allFlag = allFlag;
+          this.orderDetail.prize = allPrize;
         },
         deep:true,
       },
@@ -176,7 +198,10 @@
               result.data[i].checked = that.items[that.itemAttrs.curIndex].selectTypes.indexOf(result.data[i].uid) !== -1;
             }
           }
-          that.itemTypes = result.data;
+          that.itemTypes.splice(0, that.itemTypes.length);
+          for (i in result.data){
+            that.itemTypes.push(result.data[i]);
+          }
         });
       },
     },

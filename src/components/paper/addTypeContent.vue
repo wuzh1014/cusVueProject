@@ -12,12 +12,12 @@
       </el-input>
     </el-col>
 
-    <!--<el-col :span="8">-->
-      <!--<b>价格 : </b>-->
-    <!--</el-col>-->
-    <!--<el-col :span="16">-->
-      <!--<el-input-number size="mini" v-model="addContent.prize"></el-input-number>-->
-    <!--</el-col>-->
+    <el-col :span="8">
+      <b>价格 : </b>
+    </el-col>
+    <el-col :span="16">
+      <el-input-number size="mini" v-model="addContent.prize"></el-input-number>
+    </el-col>
     <el-col :span="24" class="clearfix" style="height: 10px"></el-col>
     <el-col :span="8">
       <b>备注 : </b>

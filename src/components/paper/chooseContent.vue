@@ -8,7 +8,7 @@
       v-model="item.checked"
       @change="changeChecked"
       v-for="(item, index) in itemTypes">
-      {{item.name}}
+      {{item.name}}({{item.prize}})
     </el-checkbox>
   </div>
 </template>
@@ -44,14 +44,17 @@
         }
         var typesArray = [];
         var namesArray = [];
+        var prizeArray = [];
         for (let i in this.itemTypes){
           if (this.itemTypes[i].checked){
             typesArray.push(this.itemTypes[i].uid);
             namesArray.push(this.itemTypes[i].name);
+            prizeArray.push(this.itemTypes[i].prize);
           }
         }
         this.items[this.curIndex].selectTypesArray[this.modelType] = typesArray;
         this.items[this.curIndex].typeNames[this.modelType] = namesArray;
+        this.items[this.curIndex].typePrizes[this.modelType] = prizeArray;
       },
     },
   }
