@@ -42,19 +42,22 @@
           this.items[this.curIndex].selectTypesArray =
             JSON.parse(JSON.stringify(this.selectTypesArray));
         }
-        var typesArray = [];
-        var namesArray = [];
-        var prizeArray = [];
+
+        this.items[this.curIndex].selectTypesArray[this.modelType].splice(0,
+          this.items[this.curIndex].selectTypesArray[this.modelType].length);
+        this.items[this.curIndex].typeNames[this.modelType].splice(0,
+          this.items[this.curIndex].typeNames[this.modelType].length);
+        this.items[this.curIndex].typePrizes[this.modelType].splice(0,
+          this.items[this.curIndex].typePrizes[this.modelType].length);
+
         for (let i in this.itemTypes){
           if (this.itemTypes[i].checked){
-            typesArray.push(this.itemTypes[i].uid);
-            namesArray.push(this.itemTypes[i].name);
-            prizeArray.push(this.itemTypes[i].prize);
+            this.items[this.curIndex].selectTypesArray[this.modelType].push(this.itemTypes[i].uid);
+            this.items[this.curIndex].typeNames[this.modelType].push(this.itemTypes[i].name);
+            this.items[this.curIndex].typePrizes[this.modelType].push(this.itemTypes[i].prize);
           }
         }
-        this.items[this.curIndex].selectTypesArray[this.modelType] = typesArray;
-        this.items[this.curIndex].typeNames[this.modelType] = namesArray;
-        this.items[this.curIndex].typePrizes[this.modelType] = prizeArray;
+
       },
     },
   }

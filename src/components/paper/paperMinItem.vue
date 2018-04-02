@@ -56,7 +56,7 @@
       </el-col>
       <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
-      <el-col :span="6" v-if="!itemAttrs.hideNumFlag">
+      <el-col :span="5" v-if="!itemAttrs.hideNumFlag">
         <el-col :span="24">
           <input class="cusInput" type="text" :title="item.flag" v-model="item.flag">
         </el-col>
@@ -151,17 +151,15 @@
         </el-col>
       </el-col>
 
-      <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-
-      <el-col :span="12" v-if="!itemAttrs.hideNumFlag">
-        <el-col :span="8" class="midLabel"><span>高</span></el-col>
-        <el-col :span="8">
+      <el-col :span="5" v-if="!itemAttrs.hideNumFlag">
+        <el-col :span="24" class="midLabel"><span>高</span></el-col>
+        <el-col :span="24">
           <input class="cusInput" type="text" :title="item.allLong" v-model="item.allLong">
         </el-col>
-        <el-col :span="8" class="midLabel"><span>米</span></el-col>
+        <el-col :span="24" class="midLabel"><span>米</span></el-col>
       </el-col>
 
-      <el-col :span="12" v-else>
+      <el-col :span="5" v-else>
         <el-col :span="12"><span>高</span>
           <span>{{item.allLong}}</span>
           <span>米</span>
@@ -200,15 +198,15 @@
     padding-left: 5px;
   }
   .selectLabel{
-    font-size: 10px;
+    font-size: 12px;
     line-height: 14px;
   }
   .showLabel{
-    font-size: 10px;
+    font-size: 12px;
     line-height: 13px;
   }
   .item-box{
-    font-size: 7px;
+    font-size: 12px;
     height: auto;
     display: inline-block;
     border-top: 1px solid #b2b2b2;
