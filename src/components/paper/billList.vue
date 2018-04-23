@@ -31,10 +31,10 @@
   @import '../../style/mixin';
   .billList{
     position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 2;
     background-color: #fff;
     overflow: auto;

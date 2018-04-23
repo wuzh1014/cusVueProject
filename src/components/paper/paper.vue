@@ -1,36 +1,42 @@
 <template>
   <div class="paper">
-
     <el-container class="box">
-      <headTop
-        :hideNumFlag="itemAttrs.hideNumFlag"
-        :headTitle="titleName"
-        @showTitle="showTitle"
-        @printPaper="printPaper"
-        @comfirmPage="comfirmPage"></headTop>
-      <el-main>
-        <paperTop
-          :itemAttrs="itemAttrs"
-          :contentId="contentId"
-          :orderDetail="orderDetail"
-        ></paperTop>
+      <el-col :span="5" v-show="itemAttrs.sliderIndex != -1">
+        <slider></slider>
+      </el-col>
+      <el-col :span="19">
+        <headTop
+          :hideNumFlag="itemAttrs.hideNumFlag"
+          :headTitle="titleName"
+          @showTitle="showTitle"
+          @printPaper="printPaper"
+          @comfirmPage="comfirmPage"></headTop>
+        <el-main>
+          <el-col :span="24">
+            <paperTop
+              :itemAttrs="itemAttrs"
+              :contentId="contentId"
+              :orderDetail="orderDetail"
+            ></paperTop>
+            <paperItem :items="items"
+                       :itemAttrs="itemAttrs"
+                       :itemTypes="itemTypes"
+                       :defaultItem="defaultItem"
+                       :countAttrs="countAttrs"
+                       :orderDetail="orderDetail"
+                       ></paperItem>
 
-        <paperItem :items="items"
-                   :itemAttrs="itemAttrs"
-                   :itemTypes="itemTypes"
-                   :defaultItem="defaultItem"
-                   :countAttrs="countAttrs"
-                   :orderDetail="orderDetail"
-                   ></paperItem>
+            <paperBottom
+              :itemAttrs="itemAttrs"
+              :createTime="createTime"
+              :orderDetail="orderDetail"
+            ></paperBottom>
 
-        <paperBottom
-          :itemAttrs="itemAttrs"
-          :createTime="createTime"
-          :orderDetail="orderDetail"
-        ></paperBottom>
+          </el-col>
 
-        <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-      </el-main>
+          <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+        </el-main>
+      </el-col>
     </el-container>
 
     <el-dialog
@@ -76,22 +82,23 @@
   }
   .paper{
     position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 2;
     background-color: #fff;
     overflow: auto;
     .box{
       font-size: 20px;
-      padding-top: 70px;
+      padding-top: 50px;
     }
   }
 </style>
 <script>
   import chooseContent from '@/components/paper/chooseContent'
   import headTop from '@/components/paper/head'
+  import slider from '@/components/paper/slider'
   import paperTop from '@/components/paper/paperTop'
   import paperBottom from '@/components/paper/paperBottom'
   import paperItem from '@/components/paper/paperItem'
@@ -114,6 +121,8 @@
         flag: 0,
         count: 0,
         needHead: 1,
+        itemMode: 1, //1 item 2 button
+        isEdit: 0,
         selectTypes: [],
         selectTypesArray: [
           [],[],[],[]
@@ -127,7 +136,7 @@
       };
       return {
         titleName:'订单名称',
-        initItemSize: 7,
+        initItemSize: 3,
         items: [],
         defaultItem: defaultItem,
         titleFlag: false,
@@ -138,6 +147,7 @@
           modelType: 0,
           chooseTittle: '',
           hideNumFlag: 0,
+          sliderIndex: 0,
         },
         countAttrs: {
           allUpLong: 0,
@@ -180,7 +190,7 @@
         window.location.reload();
       },
       async init() {
-        var query = this.$route.query;
+        let query = this.$route.query;
         if (query.contentId){
           this.contentId = query.contentId;
         }
@@ -194,7 +204,7 @@
           });
           response.then(function (result) {
             if (result.data.code){
-              var billContent = result.data.billContent[0];
+              let billContent = result.data.billContent[0];
               that.orderDetail.address = billContent.address;
               that.orderDetail.mobile = billContent.mobile;
               that.orderDetail.phone = billContent.phone;
@@ -225,7 +235,7 @@
               that.orderDetail.sliceFlag = !!billContent.sliceFlag;
               that.orderDetail.packFlag = !!billContent.packFlag
               that.orderDetail.operator = billContent.operator;
-              for (var i in result.data.items){
+              for (let i in result.data.items){
                 result.data.items[i].typeNames = JSON.parse(JSON.stringify(that.defaultItem.typeNames));
                 result.data.items[i].typePrizes = JSON.parse(JSON.stringify(that.defaultItem.typePrizes));
               }
@@ -236,15 +246,22 @@
             }
           });
         }else {
-            for(let i = 0;i < this.initItemSize;i++){
-              this.items.push(JSON.parse(JSON.stringify(this.defaultItem)));
+          for(let i = 0;i < this.initItemSize;i++){
+            let addItem = JSON.parse(JSON.stringify(this.defaultItem));
+            if (i === 0){
+                addItem.isEdit = 1;
             }
+            this.items.push(addItem);
+          }
+          let addItem = JSON.parse(JSON.stringify(this.defaultItem));
+          addItem.itemMode = 2;
+          this.items.push(addItem);
         }
       },
 
       comfirmPage(){
         let that = this;
-        for (var i in this.items){
+        for (let i in this.items){
           if (this.items[i].selectTypesArray){
             this.items[i].selectTypes = [].concat(
               this.items[i].selectTypesArray[0],
@@ -283,14 +300,14 @@
         this.itemAttrs.hideNumFlag = !this.itemAttrs.hideNumFlag;
       },
       initSetTypeNames(){
-        for(var k in [0, 1, 2, 3]){
+        for(let k in [0, 1, 2, 3]){
           let that = this;
           let response = doDataPost('/product/getItemTypes', {
             type: k,
           });
           response.then(function (result) {
-            for (var t in result.data){
-              for (var i in that.items){
+            for (let t in result.data){
+              for (let i in that.items){
                 if (that.items[i].selectTypes.indexOf(result.data[t].uid)!=-1){
                   that.items[i].typeNames[result.data[t].type].push(result.data[t].name);
                   that.items[i].typePrizes[result.data[t].type].push(result.data[t].prize);
@@ -301,9 +318,9 @@
         }
       },
       GetQueryString(str,name){
-        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-        var r = str.match(reg);
-        if(r!=null)return  unescape(r[2]); return null;
+        let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        let r = str.match(reg);
+        if(r != null)return  unescape(r[2]); return null;
       },
       showTitle(){
         this.titleFlag = !this.titleFlag;
@@ -314,6 +331,7 @@
       chooseContent,
       paperTop,
       paperBottom,
+      slider,
       paperItem
     },
   }

@@ -1,5 +1,4 @@
 <template>
-  <el-header>
     <el-row class="head-other" @click="showTitle">
       <div class="head-back">
         <el-button type="primary" round @click="routerto">返回</el-button>
@@ -13,7 +12,6 @@
         <el-button v-if="addTypeFlag==1" type="info" round @click="comfirmPage">新增</el-button>
       </div>
     </el-row>
-  </el-header>
 </template>
 
 <script>
@@ -60,8 +58,8 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: 60px;
-    line-height: 1.093333rem;
+    height: 50px;
+    line-height: 50px;
     background-color: #ECF5FD;
     text-align: center;
 
@@ -70,9 +68,8 @@
     }
     head-base{
       position: fixed;
-      top: 10px;
       display: inline-block;
-      line-height: 0.5rem;
+      line-height: 50px;
     }
     .head-back{
       @extend head-base;
@@ -85,7 +82,7 @@
     .head-title{
       min-height: 28px;
       min-width: 400px;
-      line-height: 28px;
+      line-height: 50px;
       display: inline-block;
       color:#000;
       font-size: 30px;

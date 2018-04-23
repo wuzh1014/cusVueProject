@@ -4,6 +4,7 @@
                :spanSize="6"
                :itemAttrs="itemAttrs"
                :item="item"
+               :items="items"
                :index="index"
                @createItem="createItem"
                @removeItem="removeItem"
@@ -18,6 +19,7 @@
         :spanSize="24"
         :itemAttrs="itemAttrs"
         :item="item"
+        :items="items"
         :index="index"
         @createItem="createItem"
         @removeItem="removeItem"
@@ -27,11 +29,13 @@
         :key="index"
       ></paperMinItem>
     </el-col>
-    <el-col :span="18">
+
+
+    <el-col :span="18" @click.native.stop="hideAllItem()">
       <el-col class="midTitle" :span="24">
         订单统计:
       </el-col>
-      <el-col :span="10" :offset="4">
+      <el-col :span="8" :offset="3">
         <el-col class="midList" :span="24">
           共{{countAttrs.allUpLong}}米轨道。
         </el-col>
@@ -156,9 +160,23 @@
         deep:true,
       },
     },
+    created(){
+    },
     methods: {
       createItem(){
-        this.items.push(JSON.parse(JSON.stringify(this.defaultItem)));
+          if (this.items.length > 0 && this.items[this.items.length - 1].itemMode === 2){
+            let top = this.items.pop();
+            this.items.push(JSON.parse(JSON.stringify(this.defaultItem)));
+            this.items.push(top);
+          }else {
+            this.items.push(JSON.parse(JSON.stringify(this.defaultItem)));
+          }
+      },
+      hideAllItem(){
+        for (let i in this.items){
+          this.items[i].isEdit = 0;
+        }
+        this.itemAttrs.sliderIndex = -1;
       },
       removeItem(index){
         this.items.splice(index, 1);
@@ -166,17 +184,30 @@
       duringGetTypes(index, modelType){
         this.itemAttrs.modelType = modelType;
         switch (modelType){
-          case 0:this.itemAttrs.chooseTittle = '轨道配件';
-
+          case 0:this.itemAttrs.chooseTittle = '导轨配件';
           break;
-          case 1:this.itemAttrs.chooseTittle = '天花板配件';
-
+          case 1:this.itemAttrs.chooseTittle = '安装类型';
           break;
           case 2:this.itemAttrs.chooseTittle = '布料类型';
-
           break;
           case 3:this.itemAttrs.chooseTittle = '纱布类型';
 
+
+//          case 3:this.itemAttrs.chooseTittle = '帘头类型';
+//          case 3:this.itemAttrs.chooseTittle = '帘头配件';
+
+//          case 3:this.itemAttrs.chooseTittle = '布料配件';
+
+//          case 3:this.itemAttrs.chooseTittle = '纱布配件';
+
+//          case 3:this.itemAttrs.chooseTittle = '其他配件';
+
+//          case 3:this.itemAttrs.chooseTittle = '拉帘类型';
+
+
+
+
+//          case 3:this.itemAttrs.chooseTittle = '导轨类型';
           break;
         }
         this.itemAttrs.curIndex = index;
