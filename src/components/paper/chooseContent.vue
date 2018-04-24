@@ -43,12 +43,9 @@
             JSON.parse(JSON.stringify(this.selectTypesArray));
         }
 
-        this.items[this.curIndex].selectTypesArray[this.modelType].splice(0,
-          this.items[this.curIndex].selectTypesArray[this.modelType].length);
-        this.items[this.curIndex].typeNames[this.modelType].splice(0,
-          this.items[this.curIndex].typeNames[this.modelType].length);
-        this.items[this.curIndex].typePrizes[this.modelType].splice(0,
-          this.items[this.curIndex].typePrizes[this.modelType].length);
+        this.items[this.curIndex].selectTypesArray[this.modelType].splice(0, this.items[this.curIndex].selectTypesArray[this.modelType].length);
+        this.items[this.curIndex].typeNames[this.modelType].splice(0, this.items[this.curIndex].typeNames[this.modelType].length);
+        this.items[this.curIndex].typePrizes[this.modelType].splice(0, this.items[this.curIndex].typePrizes[this.modelType].length);
 
         for (let i in this.itemTypes){
           if (this.itemTypes[i].checked){

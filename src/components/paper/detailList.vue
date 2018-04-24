@@ -36,10 +36,10 @@
   @import '../../style/mixin';
   .detailList{
     position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 2;
     background-color: #fff;
     overflow: auto;
@@ -70,15 +70,23 @@
     watch: {
     },
     created(){
-      var query = this.$route.query;
+      let query = this.$route.query;
       if (query.type){
         this.type = query.type;
       }
       switch (this.type){
-        case 0:this.titleName = '轨道配件';break;
-        case 1:this.titleName = '天花板配件';break;
-        case 2:this.titleName = '布料类型';break;
-        case 3:this.titleName = '纱布类型';break;
+        case 0:this.titleName = '导轨类型';break;
+        case 1:this.titleName = '导轨配件';break;
+        case 2:this.titleName = '帘头类型';break;
+        case 3:this.titleName = '帘头配件';break;
+        case 4:this.titleName = '安装类型';break;
+        case 5:this.titleName = '布料类型';break;
+        case 6:this.titleName = '布料配件';break;
+        case 7:this.titleName = '纱布类型';break;
+        case 8:this.titleName = '纱布配件';break;
+        case 9:this.titleName = '其他配件';break;
+        case 10:this.titleName = '拉帘类型';break;
+        case 11:this.titleName = '导轨型号';break;
       }
       this.getDetailList();
     },
@@ -90,7 +98,7 @@
           exist: 1,
         });
         response.then(function (result) {
-          for (var i in result.data){
+          for (let i in result.data){
             if (result.data[i].createTime){
               result.data[i].createTime = new Date(result.data[i].createTime);
               result.data[i].createTime = result.data[i].createTime.getFullYear() + '年'
@@ -98,6 +106,9 @@
                 + result.data[i].createTime.getHours() + ':' +result.data[i].createTime.getMinutes();
             }else{
               result.data[i].createTime = '';
+            }
+            if (!result.data[i].prize){
+              result.data[i].prize = 0
             }
           }
           that.detailList = result.data;

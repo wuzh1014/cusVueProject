@@ -6,7 +6,7 @@
         <el-row>
           <el-col :span="5" v-for="(menu, index) in menuList" :key="index" :offset="index>0?1:0">
             <el-card :body-style="{ padding: '0px' }">
-              <div :class="menu.color" @click="toLink(index)">
+              <div :class="menu.color" @click="toLink(menu.index)">
                 <label>{{menu.name}}</label>
               </div>
               <div style="padding: 14px;">
@@ -33,25 +33,77 @@ export default {
       titleName: '配件类型',
       menuList: [
         {
-          name: '轨道',
+          name: '导轨类型',
           color: 'rred',
-          fullname: '轨道配件'
+          fullname: '导轨类型',
+          index: 0
         },
         {
-          name: '天花',
+          name: '导轨配件',
           color: 'ggreen',
-          fullname: '天花配件'
+          fullname: '导轨配件',
+          index: 1
         },
         {
-          name: '布料',
+          name: '帘头类型',
           color: 'bblue',
-          fullname: '布料配件'
+          fullname: '帘头类型',
+          index: 2
         },
         {
-          name: '纱',
+          name: '帘头配件',
           color: 'bblue',
-          fullname: '纱配件'
+          fullname: '帘头配件',
+          index: 3
         },
+        {
+          name: '安装类型',
+          color: 'ggreen',
+          fullname: '安装类型',
+          index: 4
+        },
+        {
+          name: '布料类型',
+          color: 'bblue',
+          fullname: '布料类型',
+          index: 5
+        },
+        {
+          name: '布料配件',
+          color: 'bblue',
+          fullname: '布料配件',
+          index: 6
+        },
+        {
+          name: '纱布类型',
+          color: 'ggreen',
+          fullname: '纱布类型',
+          index: 7
+        },
+        {
+          name: '纱布配件',
+          color: 'bblue',
+          fullname: '纱布配件',
+          index: 8
+        },
+        {
+          name: '其他配件',
+          color: 'bblue',
+          fullname: '其他配件',
+          index: 9
+        },
+        {
+          name: '拉帘类型',
+          color: 'ggreen',
+          fullname: '拉帘类型',
+          index: 10
+        },
+        {
+          name: '导轨型号',
+          color: 'bblue',
+          fullname: '导轨型号',
+          index: 11
+        }
       ],
     }
   },
@@ -64,20 +116,7 @@ export default {
     async init() {
     },
     toLink(index){
-      switch (index){
-        case 0:
-          this.$router.push({path: '/typeList/detailList', query:{type: 0}});
-          break;
-        case 1:
-          this.$router.push({path: '/typeList/detailList', query:{type: 1}});
-          break;
-        case 2:
-          this.$router.push({path: '/typeList/detailList', query:{type: 2}});
-          break;
-        case 3:
-          this.$router.push({path: '/typeList/detailList', query:{type: 3}});
-          break;
-      }
+      this.$router.push({path: '/typeList/detailList', query:{type: 0}});
     },
   },
   watch: {

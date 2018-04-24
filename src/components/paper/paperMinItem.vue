@@ -4,23 +4,51 @@
 
       <div>
         <!--<span>第{{index + 1}}</span>-->
-        <!--<el-button v-if="item.isEdit" @click="removeItem(index)" style="float: right; padding: 3px 0" type="text" >删除</el-button>-->
+        <!--<el-button v-if="item.isEdit" style="float: right; padding: 3px 0" type="text" >删除</el-button>-->
       </div>
       <el-row>
+
         <el-col :span="24" v-if="item.isEdit">
           <el-col :span="7">
-            <el-button @click="duringGetTypes(index, 0)"
-                       size="mini" type="success" plain>轨道</el-button>
+            <b>帘头 : </b>
           </el-col>
-          <el-col class="selectLabel" :span="12" v-if="item.typeNames[0].length > 0">
-            <span v-for="iname in item.typeNames[0]">{{iname}},</span>
+          <el-col class="selectLabel" :span="12" v-if="item.typeNames[3].length > 0">
+            <span v-for="iname in item.typeNames[3]">{{iname}},</span>
+          </el-col>
+          <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+          <el-col :span="6">
+            <input class="cusInput" type="text" :title="item.listLong" v-model="item.listLong">
+          </el-col>
+          <el-col :span="6" class="midLabel">
+            <span>米</span>
+          </el-col>
+        </el-col>
+
+        <el-col :span="24" v-else>
+          <el-col :span="13">
+            <b>帘头 : </b>
+            <span>{{item.listLong}}</span>
+            <span>米</span>
+          </el-col>
+          <el-col class="showLabel" :span="11" v-if="item.typeNames[3].length > 0">
+            <span v-for="iname in item.typeNames[3]">{{iname}},</span>
+          </el-col>
+        </el-col>
+
+
+        <el-col :span="24" v-if="item.isEdit">
+          <el-col :span="7">
+            <b>轨道 : </b>
+          </el-col>
+          <el-col class="selectLabel" :span="12" v-if="item.typeNames[1].length > 0">
+            <span v-for="iname in item.typeNames[1]">{{iname}},</span>
           </el-col>
           <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
           <el-col :span="6">
             <input class="cusInput" type="text" :title="item.upLong" v-model="item.upLong">
           </el-col>
           <el-col :span="6" class="midLabel">
-            <span>米 X </span>
+            <span>米 x </span>
           </el-col>
           <el-col :span="6">
             <input class="cusInput" type="text" :title="item.upTime" v-model="item.upTime">
@@ -37,21 +65,17 @@
             <span>米 x </span>
             <span>{{item.upTime}}</span>
           </el-col>
-          <el-col class="showLabel" :span="11" v-if="item.typeNames[0].length > 0">
-            <span v-for="iname in item.typeNames[0]">{{iname}},</span>
+          <el-col class="showLabel" :span="11" v-if="item.typeNames[1].length > 0">
+            <span v-for="iname in item.typeNames[1]">{{iname}},</span>
           </el-col>
         </el-col>
 
 
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-
         <el-col :span="7">
-          <el-button v-if="item.isEdit" @click="duringGetTypes(index, 1)"
-                     size="mini" type="success" plain>天花</el-button>
-          <b v-else>天花 : </b>
-        </el-col>
-        <el-col class="selectLabel" :span="12" v-if="item.typeNames[1].length > 0">
-          <span v-for="iname in item.typeNames[1]">{{iname}},</span>
+          <div class="rec" :span="12" v-if="item.typeNames[4].length > 0">
+            <span>{{item.typeNames[4][0].substr(1)}}</span>
+          </div>
         </el-col>
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
@@ -87,10 +111,10 @@
 
           <el-col :span="24" v-if="item.isEdit">
             <el-col :span="9">
-              <el-button @click="duringGetTypes(index, 2)" size="mini" type="success" plain>布</el-button>
+              <b>布</b>
             </el-col>
-            <el-col class="selectLabel" :span="12" v-if="item.typeNames[2].length > 0">
-              <span v-for="iname in item.typeNames[2]">{{iname}},</span>
+            <el-col class="selectLabel" :span="12" v-if="item.typeNames[6].length > 0">
+              <span v-for="iname in item.typeNames[6]">{{iname}},</span>
             </el-col>
             <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
             <el-col :span="9">
@@ -110,8 +134,8 @@
               <span>{{item.inTime}}</span>
               <span>={{item.inMeter}}</span>
             </el-col>
-            <el-col class="selectLabel" :span="11" v-if="item.typeNames[2].length > 0">
-              <span v-for="iname in item.typeNames[2]">{{iname}},</span>
+            <el-col class="selectLabel" :span="11" v-if="item.typeNames[6].length > 0">
+              <span v-for="iname in item.typeNames[6]">{{iname}},</span>
             </el-col>
           </el-col>
 
@@ -119,10 +143,10 @@
           <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
           <el-col :span="24" v-if="item.isEdit">
             <el-col :span="9">
-              <el-button @click="duringGetTypes(index, 3)" size="mini" type="success" plain>纱</el-button>
+              <b>纱</b>
             </el-col>
-            <el-col class="selectLabel" :span="12" v-if="item.typeNames[3].length > 0">
-              <span v-for="iname in item.typeNames[3]">{{iname}},</span>
+            <el-col class="selectLabel" :span="12" v-if="item.typeNames[8].length > 0">
+              <span v-for="iname in item.typeNames[8]">{{iname}},</span>
             </el-col>
             <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
             <el-col :span="9">
@@ -142,8 +166,8 @@
               <span>{{item.bottomTime}}</span>
               <span>={{item.bottomMeter}}</span>
             </el-col>
-            <el-col class="selectLabel" :span="11" v-if="item.typeNames[3].length > 0">
-              <span v-for="iname in item.typeNames[3]">{{iname}},</span>
+            <el-col class="selectLabel" :span="11" v-if="item.typeNames[8].length > 0">
+              <span v-for="iname in item.typeNames[8]">{{iname}},</span>
             </el-col>
           </el-col>
         </el-col>
@@ -263,12 +287,10 @@
           }
         }
         this.itemAttrs.sliderIndex = this.index;
+        this.itemAttrs.sliderFlag = 1;
       },
       createItem(){
         this.$emit("createItem")
-      },
-      removeItem(index){
-        this.$emit("removeItem", index)
       },
       duringGetTypes(index, modelType){
         this.$emit("duringGetTypes", index, modelType)

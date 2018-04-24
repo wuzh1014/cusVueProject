@@ -7,7 +7,6 @@
                :items="items"
                :index="index"
                @createItem="createItem"
-               @removeItem="removeItem"
                @duringGetTypes="duringGetTypes"
                v-for="(item, index) in items"
                v-if="index < 4"
@@ -22,7 +21,6 @@
         :items="items"
         :index="index"
         @createItem="createItem"
-        @removeItem="removeItem"
         @duringGetTypes="duringGetTypes"
         v-for="(item, index) in items"
         v-if="index > 3"
@@ -176,65 +174,11 @@
         for (let i in this.items){
           this.items[i].isEdit = 0;
         }
-        this.itemAttrs.sliderIndex = -1;
-      },
-      removeItem(index){
-        this.items.splice(index, 1);
+        this.itemAttrs.sliderFlag = 0;
       },
       duringGetTypes(index, modelType){
-        this.itemAttrs.modelType = modelType;
-        switch (modelType){
-          case 0:this.itemAttrs.chooseTittle = '导轨配件';
-          break;
-          case 1:this.itemAttrs.chooseTittle = '安装类型';
-          break;
-          case 2:this.itemAttrs.chooseTittle = '布料类型';
-          break;
-          case 3:this.itemAttrs.chooseTittle = '纱布类型';
-
-
-//          case 3:this.itemAttrs.chooseTittle = '帘头类型';
-//          case 3:this.itemAttrs.chooseTittle = '帘头配件';
-
-//          case 3:this.itemAttrs.chooseTittle = '布料配件';
-
-//          case 3:this.itemAttrs.chooseTittle = '纱布配件';
-
-//          case 3:this.itemAttrs.chooseTittle = '其他配件';
-
-//          case 3:this.itemAttrs.chooseTittle = '拉帘类型';
-
-
-
-
-//          case 3:this.itemAttrs.chooseTittle = '导轨类型';
-          break;
-        }
-        this.itemAttrs.curIndex = index;
-        this.itemAttrs.modalChoose = true;
-
-        let that = this;
-        let response = doDataPost('/product/getItemTypes', {
-          type: this.itemAttrs.modelType,
-          exist: 1,
-        });
-        response.then(function (result) {
-          let i;
-          if (that.items[that.itemAttrs.curIndex].selectTypesArray){
-            for (i in result.data){
-              result.data[i].checked = that.items[that.itemAttrs.curIndex].selectTypesArray[that.itemAttrs.modelType].indexOf(result.data[i].uid) !== -1;
-            }
-          }else{
-            for (i in result.data){
-              result.data[i].checked = that.items[that.itemAttrs.curIndex].selectTypes.indexOf(result.data[i].uid) !== -1;
-            }
-          }
-          that.itemTypes.splice(0, that.itemTypes.length);
-          for (i in result.data){
-            that.itemTypes.push(result.data[i]);
-          }
-        });
-      },
+        this.$emit("duringGetTypes", index, modelType)
+      }
     },
     components:{
       ElCol,

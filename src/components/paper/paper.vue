@@ -1,8 +1,14 @@
 <template>
   <div class="paper">
     <el-container class="box">
-      <el-col :span="5" v-show="itemAttrs.sliderIndex != -1">
-        <slider></slider>
+      <el-col :span="5" v-show="itemAttrs.sliderFlag">
+        <slider
+          @duringGetTypes="duringGetTypes"
+          :items="items"
+          :itemAttrs="itemAttrs"
+          @removeItem="removeItem"
+          @resetItem="resetItem"
+        ></slider>
       </el-col>
       <el-col :span="19">
         <headTop
@@ -24,6 +30,7 @@
                        :defaultItem="defaultItem"
                        :countAttrs="countAttrs"
                        :orderDetail="orderDetail"
+                       @duringGetTypes="duringGetTypes"
                        ></paperItem>
 
             <paperBottom
@@ -120,19 +127,15 @@
         allLong: 0,
         flag: 0,
         count: 0,
+        listLong: 0,
         needHead: 1,
+        waitFlag: 0,
         itemMode: 1, //1 item 2 button
         isEdit: 0,
         selectTypes: [],
-        selectTypesArray: [
-          [],[],[],[]
-        ],
-        typeNames: [
-          [],[],[],[]
-        ],
-        typePrizes: [
-          [],[],[],[]
-        ]
+        selectTypesArray: this.initArray([], 12),
+        typeNames: this.initArray([], 12),
+        typePrizes: this.initArray([], 12),
       };
       return {
         titleName:'订单名称',
@@ -148,6 +151,7 @@
           chooseTittle: '',
           hideNumFlag: 0,
           sliderIndex: 0,
+          sliderFlag: 1,
         },
         countAttrs: {
           allUpLong: 0,
@@ -183,6 +187,12 @@
       this.init();
     },
     methods: {
+      initArray(array, time){
+          for (let i = 0; i < time; i++){
+              array.push([]);
+          }
+          return array;
+      },
       printPaper(){
         let bdhtml = window.document.body.innerHTML;
         window.document.body.innerHTML = $(".el-main").html();
@@ -324,6 +334,53 @@
       },
       showTitle(){
         this.titleFlag = !this.titleFlag;
+      },
+      removeItem(index){
+        this.items.splice(index, 1);
+      },
+      resetItem(index){
+//        this.items.splice(index, 1);
+      },
+      duringGetTypes(index, modelType){
+        this.itemAttrs.modelType = modelType;
+        switch (modelType){
+          case 0:this.itemAttrs.chooseTittle = '导轨类型';break;
+          case 1:this.itemAttrs.chooseTittle = '导轨配件';break;
+          case 2:this.itemAttrs.chooseTittle = '帘头类型';break;
+          case 3:this.itemAttrs.chooseTittle = '帘头配件';break;
+          case 4:this.itemAttrs.chooseTittle = '安装类型';break;
+          case 5:this.itemAttrs.chooseTittle = '布料类型';break;
+          case 6:this.itemAttrs.chooseTittle = '布料配件';break;
+          case 7:this.itemAttrs.chooseTittle = '纱布类型';break;
+          case 8:this.itemAttrs.chooseTittle = '纱布配件';break;
+          case 9:this.itemAttrs.chooseTittle = '其他配件';break;
+          case 10:this.itemAttrs.chooseTittle = '拉帘类型';break;
+          case 11:this.itemAttrs.chooseTittle = '导轨型号';break;
+        }
+        this.itemAttrs.curIndex = index;
+        this.itemAttrs.modalChoose = true;
+
+        let that = this;
+        let response = doDataPost('/product/getItemTypes', {
+          type: this.itemAttrs.modelType,
+          exist: 1,
+        });
+        response.then(function (result) {
+          let i;
+          if (that.items[that.itemAttrs.curIndex].selectTypesArray){
+            for (i in result.data){
+              result.data[i].checked = that.items[that.itemAttrs.curIndex].selectTypesArray[that.itemAttrs.modelType].indexOf(result.data[i].uid) !== -1;
+            }
+          }else{
+            for (i in result.data){
+              result.data[i].checked = that.items[that.itemAttrs.curIndex].selectTypes.indexOf(result.data[i].uid) !== -1;
+            }
+          }
+          that.itemTypes.splice(0, that.itemTypes.length);
+          for (i in result.data){
+            that.itemTypes.push(result.data[i]);
+          }
+        });
       },
     },
     components:{
