@@ -4,15 +4,18 @@
       <headTop :headTitle="titleName"></headTop>
       <el-main>
         <el-row>
-          <el-col :span="5" v-for="(menu, index) in menuList" :key="index" :offset="index>0?1:0">
-            <el-card :body-style="{ padding: '0px' }">
-              <div :class="menu.color" @click="toLink(menu.index)">
-                <label>{{menu.name}}</label>
-              </div>
-              <div style="padding: 14px;">
-                <span>{{menu.fullname}}</span>
-              </div>
-            </el-card>
+          <el-col :span="3" v-for="(menu, index) in menuList" :key="index" :offset="1">
+            <el-col :span="24">
+              <el-card :body-style="{ padding: '0px' }">
+                <div :class="menu.color" @click="toLink(menu.index)">
+                  <label>{{menu.name}}</label>
+                </div>
+                <div style="padding: 14px;">
+                  <span>{{menu.fullname}}</span>
+                </div>
+              </el-card>
+            </el-col>
+            <el-col :span="24" class="clearfix" style="height: 10px"></el-col>
           </el-col>
         </el-row>
       </el-main>
@@ -40,13 +43,13 @@ export default {
         },
         {
           name: '导轨配件',
-          color: 'ggreen',
+          color: 'bblue',
           fullname: '导轨配件',
           index: 1
         },
         {
           name: '帘头类型',
-          color: 'bblue',
+          color: 'ggreen',
           fullname: '帘头类型',
           index: 2
         },
@@ -64,7 +67,7 @@ export default {
         },
         {
           name: '布料类型',
-          color: 'bblue',
+          color: 'rred',
           fullname: '布料类型',
           index: 5
         },
@@ -82,19 +85,19 @@ export default {
         },
         {
           name: '纱布配件',
-          color: 'bblue',
+          color: 'rred',
           fullname: '纱布配件',
           index: 8
         },
         {
           name: '其他配件',
-          color: 'bblue',
+          color: 'ggreen',
           fullname: '其他配件',
           index: 9
         },
         {
           name: '拉帘类型',
-          color: 'ggreen',
+          color: 'rred',
           fullname: '拉帘类型',
           index: 10
         },
@@ -116,7 +119,7 @@ export default {
     async init() {
     },
     toLink(index){
-      this.$router.push({path: '/typeList/detailList', query:{type: 0}});
+      this.$router.push({path: '/typeList/detailList', query:{type: index}});
     },
   },
   watch: {

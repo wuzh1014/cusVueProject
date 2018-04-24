@@ -8,13 +8,13 @@
         <el-col class="btnItem" :span="12" v-for="(btn , index) in btnList" :key="index">
           <el-button @click="duringGetTypes(btn.index)" size="mini" type="success" plain>{{btn.name}}</el-button>
         </el-col>
-        <el-col :span="24" class="clearfix" style="height: 20px"></el-col>
+        <el-col :span="24" class="clearfix" style="height: 30px"></el-col>
 
         <el-col class="btnItem" :span="7">
           <el-button @click="duringGetTypes(5)" size="mini" type="success" plain>布料类型</el-button>
         </el-col>
         <el-col class="btnItem" :span="7">
-          <el-button @click="duringGetTypes(6)" size="mini" type="success" plain>布料配件</el-button>
+          <el-button @click="duringGetTypes(6)" size="mini" type="success" plain>配件</el-button>
         </el-col>
         <el-col class="btnItem" :span="7">
           <el-button @click="" size="mini" type="success" plain>倍数</el-button>
@@ -29,7 +29,7 @@
           <el-button @click="duringGetTypes(7)" size="mini" type="success" plain>纱布类型</el-button>
         </el-col>
         <el-col class="btnItem" :span="7">
-          <el-button @click="duringGetTypes(8)" size="mini" type="success" plain>纱布配件</el-button>
+          <el-button @click="duringGetTypes(8)" size="mini" type="success" plain>配件</el-button>
         </el-col>
         <el-col class="btnItem" :span="7">
           <el-button @click="" size="mini" type="success" plain>倍数</el-button>
@@ -44,10 +44,10 @@
           <el-button @click="duringGetTypes(9)" size="mini" type="success" plain>其他配件</el-button>
         </el-col>
 
-        <el-col :span="24" class="clearfix" style="height: 20px"></el-col>
+        <el-col :span="24" class="clearfix" style="height: 30px"></el-col>
 
         <el-col class="btnItem" :span="12">
-          <el-checkbox v-model="items[this.itemAttrs.sliderIndex].waitFlag" label="待定" border size="mini"></el-checkbox>
+          <el-checkbox v-model="items[itemAttrs.sliderIndex].waitFlag" label="待定" border size="mini"></el-checkbox>
         </el-col>
 
         <el-col :span="24" class="clearfix" style="height: 10px"></el-col>
@@ -59,8 +59,6 @@
         <el-col class="btnItem" :span="12">
           <el-button @click="removeItem()" size="mini" type="success" plain>删除单元</el-button>
         </el-col>
-
-
       </el-col>
     </el-row>
 
@@ -113,12 +111,10 @@
     }
     .btnList{
       text-align: center;
-      padding-left: 10px;
-      padding-right: 10px;
+
       .btnItem{
-
-
-
+        padding-left: 10px;
+        padding-right: 10px;
       }
     }
   }

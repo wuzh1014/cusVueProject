@@ -11,7 +11,7 @@
         v-model="addContent.name">
       </el-input>
     </el-col>
-    <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+    <el-col :span="24" class="clearfix" style="height: 10px"></el-col>
     <el-col :span="8">
       <b>价格 : </b>
     </el-col>

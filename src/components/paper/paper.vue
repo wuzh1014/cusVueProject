@@ -1,7 +1,7 @@
 <template>
   <div class="paper">
     <el-container class="box">
-      <el-col :span="5" v-show="itemAttrs.sliderFlag">
+      <el-col :span="5" v-if="itemAttrs.sliderFlag">
         <slider
           @duringGetTypes="duringGetTypes"
           :items="items"
@@ -337,6 +337,12 @@
       },
       removeItem(index){
         this.items.splice(index, 1);
+        if (this.items.length > 0){
+          this.itemAttrs.sliderIndex = 0;
+          this.items[0].isEdit = 1;
+        }else {
+          this.itemAttrs.sliderFlag = 0;
+        }
       },
       resetItem(index){
 //        this.items.splice(index, 1);

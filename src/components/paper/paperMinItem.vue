@@ -73,8 +73,9 @@
 
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
         <el-col :span="7">
-          <div class="rec" :span="12" v-if="item.typeNames[4].length > 0">
-            <span>{{item.typeNames[4][0].substr(1)}}</span>
+          <div class="recBorder">
+            <span v-if="item.typeNames[4].length > 0">{{item.typeNames[4][0].substr(0, 1)}}</span>
+            <span v-else>...</span>
           </div>
         </el-col>
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
@@ -223,6 +224,13 @@
   .selectLabel{
     font-size: 12px;
     line-height: 14px;
+  }
+  .recBorder{
+    border: 1px solid black;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
   }
   .showLabel{
     font-size: 12px;
