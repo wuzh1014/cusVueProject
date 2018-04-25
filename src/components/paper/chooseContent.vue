@@ -8,7 +8,7 @@
       v-model="item.checked"
       @change="changeChecked"
       v-for="(item, index) in itemTypes">
-      {{item.name}}({{item.prize}})
+      {{item.name}}<span v-if="item.prize">({{item.prize}})</span>
     </el-checkbox>
   </div>
 </template>
@@ -19,9 +19,7 @@
   export default {
     name: 'chooseContent',
     data () {
-      const selectTypesArray = [
-        [],[],[],[]
-      ];
+      const selectTypesArray = this.initArray([], 12);
       return {
         selectTypesArray: selectTypesArray,
         titleName:'',
@@ -37,6 +35,12 @@
       curIndex: {},
     },
     methods: {
+      initArray(array, time){
+        for (let i = 0; i < time; i++){
+          array.push([]);
+        }
+        return array;
+      },
       changeChecked() {
         if (!this.items[this.curIndex].selectTypesArray){
           this.items[this.curIndex].selectTypesArray =

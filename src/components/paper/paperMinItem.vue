@@ -16,19 +16,18 @@
             <span v-for="iname in item.typeNames[3]">{{iname}},</span>
           </el-col>
           <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-          <el-col :span="6">
+          <el-col :span="12" class="midLabel">
             <input class="cusInput" type="text" :title="item.listLong" v-model="item.listLong">
-          </el-col>
-          <el-col :span="6" class="midLabel">
             <span>米</span>
           </el-col>
+
         </el-col>
 
         <el-col :span="24" v-else>
           <el-col :span="13">
             <b>帘头 : </b>
-            <span>{{item.listLong}}</span>
-            <span>米</span>
+            <span>{{item.listLong}}
+            米</span>
           </el-col>
           <el-col class="showLabel" :span="11" v-if="item.typeNames[3].length > 0">
             <span v-for="iname in item.typeNames[3]">{{iname}},</span>
@@ -44,16 +43,10 @@
             <span v-for="iname in item.typeNames[1]">{{iname}},</span>
           </el-col>
           <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-          <el-col :span="6">
+          <el-col :span="24" class="midLabel">
             <input class="cusInput" type="text" :title="item.upLong" v-model="item.upLong">
-          </el-col>
-          <el-col :span="6" class="midLabel">
             <span>米 x </span>
-          </el-col>
-          <el-col :span="6">
             <input class="cusInput" type="text" :title="item.upTime" v-model="item.upTime">
-          </el-col>
-          <el-col :span="6" class="midLabel">
             <span>条</span>
           </el-col>
         </el-col>
@@ -81,14 +74,14 @@
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
         <el-col :span="5" v-if="item.isEdit">
-          <el-col :span="24">
+          <el-col :span="24" class="midLabel center">
             <input class="cusInput" type="text" :title="item.flag" v-model="item.flag">
           </el-col>
-          <el-col :span="24" class="midLabel"><span>幅</span></el-col>
-          <el-col :span="24">
+          <el-col :span="24" class="midLabel center"><span>幅</span></el-col>
+          <el-col :span="24" class="midLabel center">
             <input class="cusInput" type="text" :title="item.count" v-model="item.count">
           </el-col>
-          <el-col :span="24" class="midLabel"><span>个</span></el-col>
+          <el-col :span="24" class="midLabel center"><span>个</span></el-col>
         </el-col>
 
         <el-col :span="5" v-else>
@@ -118,11 +111,9 @@
               <span v-for="iname in item.typeNames[6]">{{iname}},</span>
             </el-col>
             <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-            <el-col :span="9">
+            <el-col :span="24" class="midLabel">
               <input class="cusInput" type="text" :title="item.inLong" v-model="item.inLong">
-            </el-col>
-            <el-col :span="6" class="midLabel"><span>米 x</span></el-col>
-            <el-col :span="9">
+              <span>米 x</span>
               <input class="cusInput" type="text" :title="item.inTime" v-model="item.inTime">
             </el-col>
           </el-col>
@@ -150,11 +141,9 @@
               <span v-for="iname in item.typeNames[8]">{{iname}},</span>
             </el-col>
             <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-            <el-col :span="9">
+            <el-col :span="24" class="midLabel">
               <input class="cusInput" type="text" :title="item.bottomLong" v-model="item.bottomLong">
-            </el-col>
-            <el-col :span="6" class="midLabel"><span>米 x</span></el-col>
-            <el-col :span="9">
+              <span>米 x</span>
               <input class="cusInput" type="text" :title="item.bottomTime" v-model="item.bottomTime">
             </el-col>
           </el-col>
@@ -174,18 +163,17 @@
         </el-col>
 
         <el-col :span="5" v-if="item.isEdit">
-          <el-col :span="24" class="midLabel"><span>高</span></el-col>
-          <el-col :span="24">
+          <el-col :span="24" class="midLabel center"><span>高</span></el-col>
+          <el-col :span="24" class="midLabel center">
             <input class="cusInput" type="text" :title="item.allLong" v-model="item.allLong">
           </el-col>
-          <el-col :span="24" class="midLabel"><span>米</span></el-col>
+          <el-col :span="24" class="midLabel center"><span>米</span></el-col>
         </el-col>
 
         <el-col :span="5" v-else>
-          <el-col :span="12"><span>高</span>
-            <span>{{item.allLong}}</span>
-            <span>米</span>
-          </el-col>
+          <span>高</span>
+          <span>{{item.allLong}}</span>
+          <span>米</span>
         </el-col>
 
         <el-col :span="24" class="clearfix" style="height: 15px"></el-col>
@@ -209,17 +197,26 @@
     clear: both;
   }
   .midLabel{
+    display: inline;
+    span{
+      font-size: 18px;
+      line-height: 22px;
+      display: inline;
+    }
+  }
+  .midLabel.center{
     text-align: center;
-    font-size: 18px;
-    line-height: 22px;
+    padding-left: 5px;
+    padding-right: 5px;
   }
   .cusInput{
+    max-width: 50px;
+    text-align: center;
+    display: inline;
     border: 1px solid #ff9292;
-    width: 87%;
     border-radius: 3px;
     font-size: 18px;
     line-height: 22px;
-    padding-left: 5px;
   }
   .selectLabel{
     font-size: 12px;
