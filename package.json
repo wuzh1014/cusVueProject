@@ -1,5 +1,5 @@
 {
-  "name": "cusVueproject",
+  "name": "cusvueproject",
   "version": "1.0.0",
   "description": "cusVueproject",
   "author": "wuzh1014",
@@ -22,6 +22,7 @@
     "element-ui": "^2.3.0",
     "jquery": "^3.2.1",
     "mint-ui": "^2.2.10",
+    "node-sass": "^4.9.0",
     "npm": "^5.7.1",
     "vue": "^2.5.7",
     "vue-router": "^2.6.0"
@@ -48,7 +49,6 @@
     "friendly-errors-webpack-plugin": "^1.1.3",
     "html-webpack-plugin": "^2.28.0",
     "http-proxy-middleware": "^0.17.3",
-    "node-sass": "^4.7.2",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
     "ora": "^1.2.0",
@@ -77,5 +77,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "license": "ISC"
 }

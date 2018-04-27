@@ -30,8 +30,8 @@ import {
   CheckboxButton,
   CheckboxGroup,
   // Switch,
-  // Select,
-  // Option,
+  Select,
+  Option,
   // OptionGroup,
   Button,
   // ButtonGroup,
@@ -99,8 +99,8 @@ Vue.use(Checkbox)
 Vue.use(CheckboxButton)
 Vue.use(CheckboxGroup)
 // Vue.use(Switch)
-// Vue.use(Select)
-// Vue.use(Option)
+Vue.use(Select)
+Vue.use(Option)
 // Vue.use(OptionGroup)
 Vue.use(Button)
 // Vue.use(ButtonGroup)

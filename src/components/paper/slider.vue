@@ -20,7 +20,14 @@
           <el-button @click="" size="mini" type="success" plain>倍数</el-button>
         </el-col>
         <el-col class="btnItem" :span="12">
-          <el-button @click="" size="mini" type="success" plain>倍数</el-button>
+          <el-select v-model="items[itemAttrs.sliderIndex].inTime" placeholder="请选择">
+            <el-option
+              v-for="item in timeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-col>
 
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
@@ -35,7 +42,14 @@
           <el-button @click="" size="mini" type="success" plain>倍数</el-button>
         </el-col>
         <el-col class="btnItem" :span="12">
-          <el-button @click="" size="mini" type="success" plain>倍数</el-button>
+          <el-select v-model="items[itemAttrs.sliderIndex].bottomTime" placeholder="请选择">
+            <el-option
+              v-for="item in timeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-col>
 
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
@@ -70,6 +84,24 @@
       name:'slider',
       data () {
         return {
+            timeOptions: [
+              {
+                value: 1,
+                label: 1,
+              },
+              {
+                value: 2,
+                label: 2,
+              },
+              {
+                value: 3,
+                label: 3,
+              },
+              {
+                value: 4,
+                label: 4,
+              },
+            ],
             btnList: [
               {index: 2, name: '帘头类型'},
               {index: 3, name: '帘头配件'},
