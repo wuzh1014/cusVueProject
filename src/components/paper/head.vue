@@ -5,11 +5,11 @@
       </div>
       <div class="head-title" @click="showTitle">{{headTitle}}</div>
       <div class="head-go">
-        <el-button v-if="hideNumFlag==0" type="success" round @click="comfirmPage">保存</el-button>
+        <el-button v-if="hideNumFlag==0" type="success" round @click="confirmPage">保存</el-button>
         <el-button v-if="hideNumFlag==1" type="danger" round @click="printPaper">打印</el-button>
-        <el-button v-if="hideNumFlag==1" type="info" round @click="comfirmPage">编辑</el-button>
+        <el-button v-if="hideNumFlag==1" type="info" round @click="confirmPage">编辑</el-button>
         <el-button v-if="hideNumFlag==1" type="success" round @click="toList">订单列表</el-button>
-        <el-button v-if="addTypeFlag==1" type="info" round @click="comfirmPage">新增</el-button>
+        <el-button v-if="addTypeFlag==1" type="info" round @click="confirmPage">新增</el-button>
       </div>
     </el-row>
 </template>
@@ -30,8 +30,8 @@
 //          this.$router.go(-1)
           this.$router.push('/main');
         },
-        comfirmPage(e){
-          this.$emit('comfirmPage')
+        confirmPage(e){
+          this.$emit('confirmPage')
         },
         printPaper(e){
           this.$emit('printPaper')

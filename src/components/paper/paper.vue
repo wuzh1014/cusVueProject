@@ -16,7 +16,7 @@
           :headTitle="titleName"
           @showTitle="showTitle"
           @printPaper="printPaper"
-          @comfirmPage="comfirmPage"></headTop>
+          @confirmPage="confirmPage"></headTop>
         <el-main>
           <el-col :span="24">
             <paperTop
@@ -116,17 +116,22 @@
     data () {
       const defaultItem = {
         upLong: 0,
-        upTime: 0,
+        upTime: 1,
         upMeter: 0,
-        inTime: 0,
+        inTime: 1,
         inMeter: 0,
         inLong: 0,
+        inLongLock: 0,
+        inMulti: 2,
         bottomLong: 0,
-        bottomTime: 0,
+        bottomLongLock: 0,
+        bottomTime: 1,
         bottomMeter: 0,
+        bottomMulti: 2,
+        rollLong: 0,
         allLong: 0,
-        flag: 0,
-        count: 0,
+        flag: 1,
+        count: 1,
         listLong: 0,
         needHead: 1,
         waitFlag: 0,
@@ -144,6 +149,20 @@
         defaultItem: defaultItem,
         titleFlag: false,
         itemTypes: [],
+        typeList: [
+          {index: 0, name: '导轨类型'},
+          {index: 1, name: '导轨配件'},
+          {index: 2, name: '帘头类型'},
+          {index: 3, name: '帘头配件'},
+          {index: 4, name: '安装类型'},
+          {index: 5, name: '布料类型'},
+          {index: 6, name: '布料配件'},
+          {index: 7, name: '纱布类型'},
+          {index: 8, name: '纱布配件'},
+          {index: 9, name: '其他配件'},
+          {index: 10, name: '拉帘类型'},
+          {index: 11, name: '导轨型号'},
+        ],
         itemAttrs: {
           curIndex: '',
           modalChoose: false,
@@ -153,17 +172,18 @@
           sliderIndex: 0,
           sliderFlag: 1,
         },
-        countAttrs: {
-          allUpLong: 0,
-          allUpTime: 0,
-          allInMeter: 0,
-          allInTime: 0,
-          allBottomMeter: 0,
-          allBottomTime: 0,
-          allAllLong: 0,
-          allCount: 0,
-          allFlag: 0,
-        },
+//        countAttrs: {
+//          allUpLong: 0,
+//          allUpTime: 0,
+//          allInMeter: 0,
+//          allInTime: 0,
+//          allBottomMeter: 0,
+//          allBottomTime: 0,
+//          allAllLong: 0,
+//          allCount: 0,
+//          allFlag: 0,
+//        },
+        countAttrs: [],
         contentId: '',
         createTime: '',
         orderDetail: {
@@ -269,7 +289,7 @@
         }
       },
 
-      comfirmPage(){
+      confirmPage(){
         let that = this;
         for (let i in this.items){
           if (this.items[i].selectTypesArray){
@@ -349,24 +369,15 @@
       },
       duringGetTypes(index, modelType){
         this.itemAttrs.modelType = modelType;
-        switch (modelType){
-          case 0:this.itemAttrs.chooseTittle = '导轨类型';break;
-          case 1:this.itemAttrs.chooseTittle = '导轨配件';break;
-          case 2:this.itemAttrs.chooseTittle = '帘头类型';break;
-          case 3:this.itemAttrs.chooseTittle = '帘头配件';break;
-          case 4:this.itemAttrs.chooseTittle = '安装类型';break;
-          case 5:this.itemAttrs.chooseTittle = '布料类型';break;
-          case 6:this.itemAttrs.chooseTittle = '布料配件';break;
-          case 7:this.itemAttrs.chooseTittle = '纱布类型';break;
-          case 8:this.itemAttrs.chooseTittle = '纱布配件';break;
-          case 9:this.itemAttrs.chooseTittle = '其他配件';break;
-          case 10:this.itemAttrs.chooseTittle = '拉帘类型';break;
-          case 11:this.itemAttrs.chooseTittle = '导轨型号';break;
-        }
+
+
+
+        this.itemAttrs.chooseTittle =  this.typeList[modelType].name;
+
         this.itemAttrs.curIndex = index;
         this.itemAttrs.modalChoose = true;
-
         let that = this;
+
         let response = doDataPost('/product/getItemTypes', {
           type: this.itemAttrs.modelType,
           exist: 1,

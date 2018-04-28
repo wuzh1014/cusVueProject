@@ -43,8 +43,7 @@
       },
       changeChecked() {
         if (!this.items[this.curIndex].selectTypesArray){
-          this.items[this.curIndex].selectTypesArray =
-            JSON.parse(JSON.stringify(this.selectTypesArray));
+          this.items[this.curIndex].selectTypesArray = JSON.parse(JSON.stringify(this.selectTypesArray));
         }
 
         this.items[this.curIndex].selectTypesArray[this.modelType].splice(0, this.items[this.curIndex].selectTypesArray[this.modelType].length);

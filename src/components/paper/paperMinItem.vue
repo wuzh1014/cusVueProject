@@ -10,7 +10,8 @@
 
         <el-col :span="24" v-if="item.isEdit">
           <el-col :span="7">
-            <b>帘头 : </b>
+            <b v-if="item.typeNames[2].length > 0">{{item.typeNames[2][0]}}</b>
+            <b v-else>帘头</b>
           </el-col>
           <el-col class="selectLabel" :span="12" v-if="item.typeNames[3].length > 0">
             <span v-for="iname in item.typeNames[3]">{{iname}},</span>
@@ -25,7 +26,8 @@
 
         <el-col :span="24" v-else>
           <el-col :span="13">
-            <b>帘头 : </b>
+            <b v-if="item.typeNames[2].length > 0">{{item.typeNames[2][0]}}</b>
+            <b v-else>帘头</b>
             <span>{{item.listLong}}
             米</span>
           </el-col>
@@ -37,39 +39,47 @@
 
         <el-col :span="24" v-if="item.isEdit">
           <el-col :span="7">
-            <b>轨道 : </b>
+            <b v-if="item.typeNames[0].length > 0">{{item.typeNames[0][0]}}</b>
+            <b v-else>轨道</b>
           </el-col>
           <el-col class="selectLabel" :span="12" v-if="item.typeNames[1].length > 0">
             <span v-for="iname in item.typeNames[1]">{{iname}},</span>
           </el-col>
           <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-          <el-col :span="24" class="midLabel">
+          <el-col :span="19" class="midLabel">
             <input class="cusInput" type="text" :title="item.upLong" v-model="item.upLong">
             <span>米 x </span>
             <input class="cusInput" type="text" :title="item.upTime" v-model="item.upTime">
             <span>条</span>
           </el-col>
+          <el-col :span="5">
+            <div class="recBorder">
+              <span v-if="item.typeNames[4].length > 0">{{item.typeNames[4][0].substr(0, 1)}}</span>
+              <span v-else>...</span>
+            </div>
+          </el-col>
         </el-col>
 
         <el-col :span="24" v-else>
-          <el-col :span="13">
-            <b>轨道 : </b>
+          <el-col :span="19">
+            <b v-if="item.typeNames[0].length > 0">{{item.typeNames[0][0]}}</b>
+            <b v-else>轨道</b>
             <span>{{item.upLong}}</span>
             <span>米 x </span>
             <span>{{item.upTime}}</span>
           </el-col>
-          <el-col class="showLabel" :span="11" v-if="item.typeNames[1].length > 0">
-            <span v-for="iname in item.typeNames[1]">{{iname}},</span>
+          <el-col :span="5">
+            <div class="recBorder">
+              <span v-if="item.typeNames[4].length > 0">{{item.typeNames[4][0].substr(0, 1)}}</span>
+              <span v-else>...</span>
+            </div>
           </el-col>
         </el-col>
 
 
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-        <el-col :span="7">
-          <div class="recBorder">
-            <span v-if="item.typeNames[4].length > 0">{{item.typeNames[4][0].substr(0, 1)}}</span>
-            <span v-else>...</span>
-          </div>
+        <el-col class="showLabel" :span="11" v-if="item.typeNames[1].length > 0">
+          <span v-for="iname in item.typeNames[1]">{{iname}},</span>
         </el-col>
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
@@ -103,62 +113,88 @@
             <div class="clearfix" style="height: 22px"></div>
           </el-col>
 
-          <el-col :span="24" v-if="item.isEdit">
-            <el-col :span="9">
-              <b>布</b>
+          <el-col :span="24" v-if="item.typeNames[0].length > 0 && item.typeNames[0][0].indexOf('帘') != -1">
+            <el-col :span="24" v-if="item.isEdit">
+              <el-col :span="24">
+                <b v-if="item.typeNames[10].length > 0">{{item.typeNames[10][0]}}</b>
+                <b v-else>帘</b>
+                <input class="cusInput" type="text" :title="item.rollLong" v-model="item.rollLong">
+                <span>平方米</span>
+              </el-col>
             </el-col>
-            <el-col class="selectLabel" :span="12" v-if="item.typeNames[6].length > 0">
-              <span v-for="iname in item.typeNames[6]">{{iname}},</span>
-            </el-col>
-            <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-            <el-col :span="24" class="midLabel">
-              <input class="cusInput" type="text" :title="item.inLong" v-model="item.inLong">
-              <span>米 x</span>
-              <input class="cusInput" type="text" :title="item.inTime" v-model="item.inTime">
+
+            <el-col :span="24" v-else>
+              <el-col :span="13">
+                <b v-if="item.typeNames[10].length > 0">{{item.typeNames[10][0]}}</b>
+                <b v-else>帘</b>
+                <span>{{item.rollLong}}</span>
+                <span>平方米</span>
+              </el-col>
+
             </el-col>
           </el-col>
 
           <el-col :span="24" v-else>
-            <el-col :span="13">
-              <b>布</b>
-              <span>{{item.inLong}}</span>
-              <span>x</span>
-              <span>{{item.inTime}}</span>
-              <span>={{item.inMeter}}</span>
+            <el-col :span="24" v-if="item.isEdit">
+              <el-col :span="9">
+                <b v-if="item.typeNames[5].length > 0">{{item.typeNames[5][0]}}</b>
+                <b v-else>布</b>
+              </el-col>
+              <el-col class="selectLabel" :span="12" v-if="item.typeNames[6].length > 0">
+                <span v-for="iname in item.typeNames[6]">{{iname}},</span>
+              </el-col>
+              <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+              <el-col :span="24" class="midLabel innerInput">
+                <input class="cusInput" :class="item.inLongLock?'longLock':''" type="text" :title="item.inLong" v-model="item.inLong" @input="item.inLongLock = 1">
+                <span>米 x</span>
+                <input class="cusInput" type="text" :title="item.inTime" v-model="item.inTime">
+              </el-col>
             </el-col>
-            <el-col class="selectLabel" :span="11" v-if="item.typeNames[6].length > 0">
-              <span v-for="iname in item.typeNames[6]">{{iname}},</span>
+            <el-col :span="24" v-else>
+              <el-col :span="24">
+                <b v-if="item.typeNames[5].length > 0">{{item.typeNames[5][0]}}</b>
+                <b v-else>布</b>
+                <span :class="item.bottomLongLock?'longLock':''">{{item.inLong}}</span>
+                <span>x</span>
+                <span>{{item.inTime}}</span>
+                <span>={{item.inMeter}}</span>
+              </el-col>
+              <el-col class="selectLabel" :span="24" v-if="item.typeNames[6].length > 0">
+                <span v-for="iname in item.typeNames[6]">{{iname}},</span>
+              </el-col>
             </el-col>
-          </el-col>
 
-
-          <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-          <el-col :span="24" v-if="item.isEdit">
-            <el-col :span="9">
-              <b>纱</b>
-            </el-col>
-            <el-col class="selectLabel" :span="12" v-if="item.typeNames[8].length > 0">
-              <span v-for="iname in item.typeNames[8]">{{iname}},</span>
-            </el-col>
             <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-            <el-col :span="24" class="midLabel">
-              <input class="cusInput" type="text" :title="item.bottomLong" v-model="item.bottomLong">
-              <span>米 x</span>
-              <input class="cusInput" type="text" :title="item.bottomTime" v-model="item.bottomTime">
+            <el-col :span="24" v-if="item.isEdit">
+              <el-col :span="9">
+                <b v-if="item.typeNames[7].length > 0">{{item.typeNames[7][0]}}</b>
+                <b v-else>纱</b>
+              </el-col>
+              <el-col class="selectLabel" :span="12" v-if="item.typeNames[8].length > 0">
+                <span v-for="iname in item.typeNames[8]">{{iname}},</span>
+              </el-col>
+              <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+              <el-col :span="24" class="midLabel innerInput">
+                <input class="cusInput" :class="item.bottomLongLock?'longLock':''" type="text" :title="item.bottomLong" v-model="item.bottomLong" @input="item.bottomLongLock = 1">
+                <span>米 x</span>
+                <input class="cusInput" type="text" :title="item.bottomTime" v-model="item.bottomTime">
+              </el-col>
             </el-col>
-          </el-col>
 
-          <el-col :span="24" v-else>
-            <el-col :span="13">
-              <b>纱</b>
-              <span>{{item.bottomLong}}</span>
-              <span>x</span>
-              <span>{{item.bottomTime}}</span>
-              <span>={{item.bottomMeter}}</span>
+            <el-col :span="24" v-else>
+              <el-col :span="24">
+                <b v-if="item.typeNames[7].length > 0">{{item.typeNames[7][0]}}</b>
+                <b v-else>纱</b>
+                <span :class="item.bottomLongLock?'longLock':''">{{item.bottomLong}}</span>
+                <span>x</span>
+                <span>{{item.bottomTime}}</span>
+                <span>={{item.bottomMeter}}</span>
+              </el-col>
+              <el-col class="selectLabel" :span="24" v-if="item.typeNames[8].length > 0">
+                <span v-for="iname in item.typeNames[8]">{{iname}},</span>
+              </el-col>
             </el-col>
-            <el-col class="selectLabel" :span="11" v-if="item.typeNames[8].length > 0">
-              <span v-for="iname in item.typeNames[8]">{{iname}},</span>
-            </el-col>
+
           </el-col>
         </el-col>
 
@@ -209,14 +245,27 @@
     padding-left: 5px;
     padding-right: 5px;
   }
+  .innerInput{
+    .cusInput{
+      max-width: 30%;
+    }
+    span{
+      max-width: 60%;
+    }
+
+  }
   .cusInput{
-    max-width: 50px;
+    width: 80%;
+    max-width: 45px;
     text-align: center;
     display: inline;
     border: 1px solid #ff9292;
     border-radius: 3px;
     font-size: 18px;
     line-height: 22px;
+  }
+  .longLock{
+    color: blue;
   }
   .selectLabel{
     font-size: 12px;
@@ -228,6 +277,7 @@
     height: 25px;
     line-height: 25px;
     text-align: center;
+    border-radius: 3px;
   }
   .showLabel{
     font-size: 12px;
@@ -263,12 +313,13 @@
     text-align: center;
     i{
       cursor: pointer;
-      font-size: 40px;
+      font-size: 60px;
     }
   }
 </style>
 <script>
   import {doDataPost} from '@/service/getData'
+  import ElCol from "element-ui/packages/col/src/col";
   export default {
     name: 'paperMinItem',
     data () {
@@ -301,7 +352,7 @@
         this.$emit("duringGetTypes", index, modelType)
       }
     },
-    components:{},
+    components:{ElCol},
   }
 </script>
 

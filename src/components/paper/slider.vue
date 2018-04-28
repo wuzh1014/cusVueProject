@@ -10,17 +10,15 @@
         </el-col>
         <el-col :span="24" class="clearfix" style="height: 30px"></el-col>
 
-        <el-col class="btnItem" :span="7">
+        <el-col class="btnItem" :span="12">
           <el-button @click="duringGetTypes(5)" size="mini" type="success" plain>布料类型</el-button>
         </el-col>
-        <el-col class="btnItem" :span="7">
+        <el-col class="btnItem" :span="12">
           <el-button @click="duringGetTypes(6)" size="mini" type="success" plain>配件</el-button>
         </el-col>
-        <el-col class="btnItem" :span="7">
-          <el-button @click="" size="mini" type="success" plain>倍数</el-button>
-        </el-col>
+
         <el-col class="btnItem" :span="12">
-          <el-select v-model="items[itemAttrs.sliderIndex].inTime" placeholder="请选择">
+          <el-select v-model="items[itemAttrs.sliderIndex].inMulti" placeholder="倍数" size="mini">
             <el-option
               v-for="item in timeOptions"
               :key="item.value"
@@ -32,17 +30,15 @@
 
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
-        <el-col class="btnItem" :span="7">
+        <el-col class="btnItem" :span="12">
           <el-button @click="duringGetTypes(7)" size="mini" type="success" plain>纱布类型</el-button>
         </el-col>
-        <el-col class="btnItem" :span="7">
+        <el-col class="btnItem" :span="12">
           <el-button @click="duringGetTypes(8)" size="mini" type="success" plain>配件</el-button>
         </el-col>
-        <el-col class="btnItem" :span="7">
-          <el-button @click="" size="mini" type="success" plain>倍数</el-button>
-        </el-col>
+
         <el-col class="btnItem" :span="12">
-          <el-select v-model="items[itemAttrs.sliderIndex].bottomTime" placeholder="请选择">
+          <el-select v-model="items[itemAttrs.sliderIndex].bottomMulti" placeholder="倍数" size="mini">
             <el-option
               v-for="item in timeOptions"
               :key="item.value"
@@ -86,20 +82,20 @@
         return {
             timeOptions: [
               {
-                value: 1,
-                label: 1,
-              },
-              {
                 value: 2,
                 label: 2,
               },
               {
-                value: 3,
-                label: 3,
+                value: 2.3,
+                label: 2.3,
               },
               {
-                value: 4,
-                label: 4,
+                value: 1.8,
+                label: 1.8,
+              },
+              {
+                value: 2.5,
+                label: 2.5,
               },
             ],
             btnList: [

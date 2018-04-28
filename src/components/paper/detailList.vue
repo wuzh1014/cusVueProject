@@ -1,6 +1,6 @@
 <template>
   <div class="detailList">
-    <headTop :headTitle="titleName" :addTypeFlag="addTypeFlag" @comfirmPage="showAddFrame"></headTop>
+    <headTop :headTitle="titleName" :addTypeFlag="addTypeFlag" @confirmPage="showAddFrame"></headTop>
     <div class="box">
       <el-table :data="detailList" style="width: 100%">
         <el-table-column prop="name" label="名称"></el-table-column>
