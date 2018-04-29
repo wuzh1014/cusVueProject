@@ -21,7 +21,7 @@
           <span>联系人：黄先生</span>
         </el-col>
         <el-col :span="6">
-          <span>2016年1月3日</span>
+          <span>{{createTime.getFullYear()}}年{{createTime.getMonth() + 1}}月{{createTime.getDate()}}日</span>
         </el-col>
       </el-row>
     </el-col>
@@ -52,6 +52,7 @@
       }
     },
     props: {
+      createTime:{}
     },
     components:{},
   }

@@ -53,6 +53,7 @@
       <chooseContent
         :items="items"
         :modelType="itemAttrs.modelType"
+        :typeList="typeList"
         :itemTypes="itemTypes"
         :curIndex="itemAttrs.curIndex"></chooseContent>
       <span slot="footer" class="dialog-footer">
@@ -76,7 +77,7 @@
 
 
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="titleFlag=!titleFlag">确 定</el-button>
+        <el-button type="primary" @click="titleFlag = !titleFlag">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -151,17 +152,17 @@
         titleFlag: false,
         itemTypes: [],
         typeList: [
-          {index: 0, name: '导轨类型'},
+          {index: 0, name: '导轨类型', single: 1},
           {index: 1, name: '导轨配件'},
-          {index: 2, name: '帘头类型'},
+          {index: 2, name: '帘头类型', single: 1},
           {index: 3, name: '帘头配件'},
-          {index: 4, name: '安装类型'},
-          {index: 5, name: '布料类型'},
+          {index: 4, name: '安装类型', single: 1},
+          {index: 5, name: '布料类型', single: 1},
           {index: 6, name: '布料配件'},
-          {index: 7, name: '纱布类型'},
+          {index: 7, name: '纱布类型', single: 1},
           {index: 8, name: '纱布配件'},
           {index: 9, name: '其他配件'},
-          {index: 10, name: '拉帘类型'},
+          {index: 10, name: '拉帘类型', single: 1},
           {index: 11, name: '导轨型号'},
         ],
         itemAttrs: {
@@ -175,7 +176,7 @@
         },
         countAttrs: [],
         contentId: '',
-        createTime: '',
+        createTime: new Date(),
         orderDetail: {
           address: '',
           mobile: '',
@@ -218,7 +219,7 @@
           this.itemAttrs.hideNumFlag = 0;
         }
         if (this.contentId){
-          this.sliderFlag = 0;
+          this.itemAttrs.sliderFlag = 0;
           let that = this;
           let response = doDataPost('/product/getBillSimple', {
             uid: this.contentId,
@@ -233,10 +234,9 @@
               }
 
               that.items = billContent.items;
-              if (!billContent.createTime){
-                billContent.createTime = new Date();
+              if (billContent.createTime){
+                that.createTime = new Date(billContent.createTime);
               }
-              that.createTime = billContent.createTime;
 
               if (!billContent.titleName){
                 that.titleName = '订单:' + that.contentId;
@@ -250,7 +250,7 @@
             }
           });
         }else {
-          this.sliderFlag = 1;
+          this.itemAttrs.sliderFlag = 1;
           for(let i = 0;i < this.initItemSize;i++){
             let addItem = JSON.parse(JSON.stringify(this.defaultItem));
             if (i === 0){
@@ -267,8 +267,8 @@
         this.itemAttrs.hideNumFlag = 0;
         if (this.items.length > 0){
           this.items[0].isEdit = 1;
-          this.sliderFlag = 1;
-          this.sliderIndex = 0;
+          this.itemAttrs.sliderFlag = 1;
+          this.itemAttrs.sliderIndex = 0;
         }
       },
       confirmPage(){

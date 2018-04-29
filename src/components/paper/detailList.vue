@@ -9,6 +9,7 @@
         <el-table-column prop="prize" label="单价"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
+            <el-button size="mini" @click="editItemType($event, scope.row.uid)">修改</el-button>
             <el-button size="mini" @click="deleteItemType($event, scope.row.uid)">删除</el-button>
           </template>
         </el-table-column>
@@ -24,7 +25,7 @@
         :type="type"></addTypeContent>
 
       <span slot="footer" class="dialog-footer">
-        <el-button @click="modalChoose=!modalChoose">取 消</el-button>
+        <el-button @click="modalChoose = false">取 消</el-button>
         <el-button type="primary" @click="confirmAddFrame">确 定</el-button>
       </span>
 
@@ -63,7 +64,7 @@
         addTypeFlag: 1,
         modalChoose: false,
         detailList: [],
-        addContent: [],
+        addContent: {},
         type: 0,
       }
     },
@@ -118,12 +119,13 @@
         let that = this;
         let response = doDataPost('/product/addItemTypes', {
           type: this.type,
+          uid: this.addContent.uid,
           name: this.addContent.name,
           prize: this.addContent.prize,
           memo: this.addContent.memo,
         });
         response.then(function (result) {
-          if (result.data.code){
+          if (result.data){
             that.$message({
               type: 'success',
               message: '添加成功!'
@@ -149,13 +151,24 @@
           }
         });
       },
+      editItemType(e, uid){
+        e.stopPropagation();
+        let that = this;
+        let response = doDataPost('/product/getItemType', {
+          uid: uid
+        });
+        response.then(function (result) {
+          that.addContent = result.data;
+        });
+        this.modalChoose = true;
+      },
       showAddFrame(){
-        this.modalChoose = !this.modalChoose;
-        this.addContent = [];
+        this.modalChoose = true;
+        this.addContent = {};
       },
       confirmAddFrame(){
         this.addItemTypes();
-        this.modalChoose = !this.modalChoose;
+        this.modalChoose = false;
       },
     },
     components:{headTop, addTypeContent},

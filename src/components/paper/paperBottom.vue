@@ -61,7 +61,7 @@
       <!--<b>创建日期 : </b><span>{{createTime}}</span>-->
     <!--</el-col>-->
     <el-col :span="24" class="clearfix" style="height: 4px"></el-col>
-    <bottomTip></bottomTip>
+    <bottomTip :createTime="createTime"></bottomTip>
   </el-row>
 </template>
 <style scoped lang="scss">

@@ -90,16 +90,15 @@
               this.items[i].bottomLong = this.items[i].upLong * this.items[i].bottomMulti / 2;
             }
 
-
             this.items[i].inMeter = this.items[i].inLong * parseInt(this.items[i].inTime);
             this.items[i].bottomMeter = this.items[i].bottomLong * parseInt(this.items[i].bottomTime);
-
 
             let eachPrize = 0;
 
             let upTime = parseInt(this.items[i].upTime);
             let eachUpLong = this.items[i].upLong * upTime;
             let eachFlag = parseInt(this.items[i].flag);
+
 
             if (this.items[i].typeNames[0].length > 0){
               let formatName = this.items[i].typeNames[0][0] + this.items[i].upLong + '米';
@@ -118,21 +117,28 @@
               allPrize += prize;
             }
 
-            if (this.items[i].typeNames[1].length > 0){
-              let formatName = this.items[i].typeNames[1][0]  + '(个)';
-              let cal = eachFlag;
-              if (itemMap[formatName]){
-                itemMap[formatName] += cal;
-              }else {
-                itemMap[formatName] = cal;
+
+            let attach = [1, 3, 6, 8, 9, 11];
+            for (let aIndex in attach){
+              aIndex = attach[aIndex];
+              if (this.items[i].typeNames[aIndex].length > 0){
+                for (let inIndex in this.items[i].typeNames[aIndex]){
+                  let formatName = this.items[i].typeNames[aIndex][inIndex]  + '(个)';
+                  let cal = eachFlag;
+                  if (itemMap[formatName]){
+                    itemMap[formatName] += cal;
+                  }else {
+                    itemMap[formatName] = cal;
+                  }
+                  let prize = Number(this.items[i].typePrizes[aIndex][inIndex]) * cal;
+                  if (prizeMap[formatName]){
+                    prizeMap[formatName] += prize;
+                  }else {
+                    prizeMap[formatName] = prize;
+                  }
+                  allPrize += prize;
+                }
               }
-              let prize = Number(this.items[i].typePrizes[1][0]) * cal;
-              if (prizeMap[formatName]){
-                prizeMap[formatName] += prize;
-              }else {
-                prizeMap[formatName] = prize;
-              }
-              allPrize += prize;
             }
 
             if (this.items[i].typeNames[2].length > 0){
@@ -152,22 +158,6 @@
               allPrize += prize;
             }
 
-            if (this.items[i].typeNames[3].length > 0){
-              let formatName = this.items[i].typeNames[3][0]  + '(个)';
-              let cal = eachFlag;
-              if (itemMap[formatName]){
-                itemMap[formatName] += cal;
-              }else {
-                itemMap[formatName] = cal;
-              }
-              let prize = Number(this.items[i].typePrizes[3][0]) * cal;
-              if (prizeMap[formatName]){
-                prizeMap[formatName] += prize;
-              }else {
-                prizeMap[formatName] = prize;
-              }
-              allPrize += prize;
-            }
 
             if (this.items[i].typeNames[5].length > 0){
               let formatName = this.items[i].typeNames[5][0] + this.items[i].inLong + '米';
@@ -186,22 +176,6 @@
               allPrize += prize;
             }
 
-            if (this.items[i].typeNames[6].length > 0){
-              let formatName = this.items[i].typeNames[6][0]  + '(个)';
-              let cal = eachFlag;
-              if (itemMap[formatName]){
-                itemMap[formatName] += cal;
-              }else {
-                itemMap[formatName] = cal;
-              }
-              let prize = Number(this.items[i].typePrizes[6][0]) * cal;
-              if (prizeMap[formatName]){
-                prizeMap[formatName] += prize;
-              }else {
-                prizeMap[formatName] = prize;
-              }
-              allPrize += prize;
-            }
 
             if (this.items[i].typeNames[7].length > 0){
               let formatName = this.items[i].typeNames[7][0] + this.items[i].bottomLong + '米';
@@ -220,41 +194,6 @@
               allPrize += prize;
             }
 
-            if (this.items[i].typeNames[8].length > 0){
-              let formatName = this.items[i].typeNames[8][0]  + '(个)';
-              let cal = eachFlag;
-              if (itemMap[formatName]){
-                itemMap[formatName] += cal;
-              }else {
-                itemMap[formatName] = cal;
-              }
-              let prize = Number(this.items[i].typePrizes[8][0]) * cal;
-              if (prizeMap[formatName]){
-                prizeMap[formatName] += prize;
-              }else {
-                prizeMap[formatName] = prize;
-              }
-              allPrize += prize;
-            }
-
-            if (this.items[i].typeNames[9].length > 0){
-              let formatName = this.items[i].typeNames[9][0]  + '(个)';
-              let cal = eachFlag;
-              if (itemMap[formatName]){
-                itemMap[formatName] += cal;
-              }else {
-                itemMap[formatName] = cal;
-              }
-              let prize = Number(this.items[i].typePrizes[9][0]) * cal;
-              if (prizeMap[formatName]){
-                prizeMap[formatName] += prize;
-              }else {
-                prizeMap[formatName] = prize;
-              }
-              allPrize += prize;
-            }
-
-
             if (this.items[i].typeNames[10].length > 0){
               let formatName = this.items[i].typeNames[10][0] + '(平方米)';
               let cal = parseFloat(this.items[i].rollLong) * eachFlag;
@@ -264,23 +203,6 @@
                 itemMap[formatName] = cal;
               }
               let prize = Number(this.items[i].typePrizes[10][0]) * cal;
-              if (prizeMap[formatName]){
-                prizeMap[formatName] += prize;
-              }else {
-                prizeMap[formatName] = prize;
-              }
-              allPrize += prize;
-            }
-
-            if (this.items[i].typeNames[11].length > 0){
-              let formatName = this.items[i].typeNames[11][0]  + '型号';
-              let cal = eachFlag;
-              if (itemMap[formatName]){
-                itemMap[formatName] += cal;
-              }else {
-                itemMap[formatName] = cal;
-              }
-              let prize = Number(this.items[i].typePrizes[11][0]) * cal;
               if (prizeMap[formatName]){
                 prizeMap[formatName] += prize;
               }else {
@@ -303,6 +225,8 @@
             }
 
           }
+
+
           this.countAttrs.splice(0, this.countAttrs.length);
           for (let item in itemMap){
               let tipLine = item + ' : ' + itemMap[item];

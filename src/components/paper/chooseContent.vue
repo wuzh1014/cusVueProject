@@ -6,7 +6,7 @@
       :label="item.name"
       :key="index"
       v-model="item.checked"
-      @change="changeChecked"
+      @change="changeChecked(index)"
       v-for="(item, index) in itemTypes">
       {{item.name}}<span v-if="item.prize">({{item.prize}})</span>
     </el-checkbox>
@@ -19,9 +19,8 @@
   export default {
     name: 'chooseContent',
     data () {
-      const selectTypesArray = this.initArray([], 12);
       return {
-        selectTypesArray: selectTypesArray,
+        selectTypesArray: this.initArray([], 12),
         titleName:'',
         chooseContent:'',
       }
@@ -31,6 +30,7 @@
         type: Number
       },
       itemTypes: {},
+      typeList: {},
       items: {},
       curIndex: {},
     },
@@ -41,7 +41,7 @@
         }
         return array;
       },
-      changeChecked() {
+      changeChecked(index) {
         if (!this.items[this.curIndex].selectTypesArray){
           this.items[this.curIndex].selectTypesArray = JSON.parse(JSON.stringify(this.selectTypesArray));
         }
@@ -49,6 +49,14 @@
         this.items[this.curIndex].selectTypesArray[this.modelType].splice(0, this.items[this.curIndex].selectTypesArray[this.modelType].length);
         this.items[this.curIndex].typeNames[this.modelType].splice(0, this.items[this.curIndex].typeNames[this.modelType].length);
         this.items[this.curIndex].typePrizes[this.modelType].splice(0, this.items[this.curIndex].typePrizes[this.modelType].length);
+
+        if (this.typeList[this.modelType].single){
+          for (let i in this.itemTypes){
+              if (parseInt(i) != index){
+                this.itemTypes[i].checked = false;
+              }
+          }
+        }
 
         for (let i in this.itemTypes){
           if (this.itemTypes[i].checked){
