@@ -83,6 +83,10 @@
           let allPrize = 0;
           for (let i in this.items){
 
+            if (this.items[i].waitFlag){
+              continue;
+            }
+
             if (!this.items[i].inLongLock){
               this.items[i].inLong = this.items[i].upLong * this.items[i].inMulti / 2;
             }
@@ -123,7 +127,7 @@
               aIndex = attach[aIndex];
               if (this.items[i].typeNames[aIndex].length > 0){
                 for (let inIndex in this.items[i].typeNames[aIndex]){
-                  let formatName = this.items[i].typeNames[aIndex][inIndex]  + '(个)';
+                  let formatName = this.items[i].typeNames[aIndex][inIndex]  + '(单位 个)';
                   let cal = eachFlag;
                   if (itemMap[formatName]){
                     itemMap[formatName] += cal;
@@ -142,7 +146,7 @@
             }
 
             if (this.items[i].typeNames[2].length > 0){
-              let formatName = this.items[i].typeNames[2][0] + '(米)';
+              let formatName = this.items[i].typeNames[2][0] + '(单位 米)';
               let cal = parseFloat(this.items[i].listLong) * eachFlag;
               if (itemMap[formatName]){
                 itemMap[formatName] += cal;
@@ -195,7 +199,7 @@
             }
 
             if (this.items[i].typeNames[10].length > 0){
-              let formatName = this.items[i].typeNames[10][0] + '(平方米)';
+              let formatName = this.items[i].typeNames[10][0] + '(单位 平方米)';
               let cal = parseFloat(this.items[i].rollLong) * eachFlag;
               if (itemMap[formatName]){
                 itemMap[formatName] += cal;

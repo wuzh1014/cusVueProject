@@ -339,7 +339,20 @@
         }
       },
       resetItem(index){
-//        this.items.splice(index, 1);
+        for (let attr in this.items[index]){
+          if (this.items[index][attr] instanceof Array){
+            if (this.items[index][attr].length > 0 && this.items[index][attr][0] instanceof Array){
+              for (let arrIndex in this.items[index][attr]){
+                this.items[index][attr][arrIndex].splice(0, this.items[index][attr][arrIndex].length);
+              }
+            }else {
+              this.items[index][attr].splice(0, this.items[index][attr].length);
+            }
+          }else {
+            this.items[index][attr] = this.defaultItem[attr];
+          }
+        }
+        this.items[index].isEdit = 1;
       },
       duringGetTypes(index, modelType){
         this.itemAttrs.modelType = modelType;

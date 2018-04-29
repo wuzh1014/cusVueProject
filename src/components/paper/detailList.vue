@@ -4,6 +4,7 @@
     <div class="box">
       <el-table :data="detailList" style="width: 100%">
         <el-table-column prop="name" label="名称"></el-table-column>
+        <el-table-column prop="mini" label="缩写"></el-table-column>
         <el-table-column prop="memo" label="备注"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column prop="prize" label="单价"></el-table-column>
@@ -122,6 +123,7 @@
           uid: this.addContent.uid,
           name: this.addContent.name,
           prize: this.addContent.prize,
+          mini: this.addContent.mini,
           memo: this.addContent.memo,
         });
         response.then(function (result) {

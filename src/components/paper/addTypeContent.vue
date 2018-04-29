@@ -18,7 +18,19 @@
     <el-col :span="16">
       <el-input-number size="mini" v-model="addContent.prize"></el-input-number>
     </el-col>
-    <el-col :span="24" class="clearfix" style="height: 10px"></el-col>
+    <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+    <el-col :span="8">
+      <b>缩写 : </b>
+    </el-col>
+    <el-col :span="24">
+      <el-input
+        size="mini"
+        placeholder="缩写"
+        prefix-icon="el-icon-edit"
+        v-model="addContent.mini">
+      </el-input>
+    </el-col>
+    <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
     <el-col :span="8">
       <b>备注 : </b>
     </el-col>

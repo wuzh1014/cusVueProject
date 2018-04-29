@@ -61,7 +61,11 @@
         for (let i in this.itemTypes){
           if (this.itemTypes[i].checked){
             this.items[this.curIndex].selectTypesArray[this.modelType].push(this.itemTypes[i].uid);
-            this.items[this.curIndex].typeNames[this.modelType].push(this.itemTypes[i].name);
+            if (this.itemTypes[i].mini){
+              this.items[this.curIndex].typeNames[this.modelType].push(this.itemTypes[i].mini);
+            }else {
+              this.items[this.curIndex].typeNames[this.modelType].push(this.itemTypes[i].name);
+            }
             this.items[this.curIndex].typePrizes[this.modelType].push(this.itemTypes[i].prize);
           }
         }

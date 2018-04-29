@@ -152,7 +152,7 @@
               <el-col :span="24">
                 <b v-if="item.typeNames[5].length > 0">{{item.typeNames[5][0]}}</b>
                 <b v-else>布</b>
-                <span :class="item.bottomLongLock?'longLock':''">{{item.inLong}}</span>
+                <span :class="item.inLongLock?'longLock':''">{{item.inLong}}</span>
                 <span>x</span>
                 <span>{{item.inTime}}</span>
                 <span>={{item.inMeter}}</span>
