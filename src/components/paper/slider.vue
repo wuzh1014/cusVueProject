@@ -2,7 +2,7 @@
   <div class="slider">
     <el-row>
       <el-col class="sliderTitle" :span="24">
-        <b>设置区</b>
+        <b>设置区{{' ' + (itemAttrs.sliderIndex + 1)}}</b>
       </el-col>
       <el-col class="btnList" :span="24">
         <el-col class="btnItem" :span="12" v-for="(btn , index) in btnList" :key="index">

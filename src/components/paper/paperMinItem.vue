@@ -16,7 +16,7 @@
           <el-col class="selectLabel" :span="12" v-if="item.typeNames[3].length > 0">
             <span v-for="iname in item.typeNames[3]">{{iname}},</span>
           </el-col>
-          <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
+          <el-col :span="24" class="clearfix" style="height: 2px"></el-col>
           <el-col :span="12" class="midLabel">
             <input class="cusInput" type="text" :title="item.listLong" v-model="item.listLong">
             <span>米</span>
@@ -36,51 +36,49 @@
           </el-col>
         </el-col>
 
+        <el-col :span="24" class="clearfix" style="height: 2"></el-col>
 
-        <el-col :span="24" v-if="item.isEdit">
-          <el-col :span="7">
-            <b v-if="item.typeNames[0].length > 0">{{item.typeNames[0][0]}}</b>
-            <b v-else>轨道</b>
+        <el-col :span="19">
+          <el-col :span="24" v-if="item.isEdit">
+            <el-col :span="24">
+              <b v-if="item.typeNames[0].length > 0">{{item.typeNames[0][0]}}</b>
+              <b v-else>轨道</b>
+            </el-col>
+            <el-col :span="24" class="clearfix" style="height: 2"></el-col>
+            <el-col :span="24" class="midLabel">
+              <input class="cusInput" type="text" :title="item.upLong" v-model="item.upLong">
+              <span>米 x </span>
+              <input class="cusInput" type="text" :title="item.upTime" v-model="item.upTime">
+              <span>条</span>
+            </el-col>
           </el-col>
-          <el-col class="selectLabel" :span="12" v-if="item.typeNames[1].length > 0">
-            <span v-for="iname in item.typeNames[1]">{{iname}},</span>
-          </el-col>
-          <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-          <el-col :span="19" class="midLabel">
-            <input class="cusInput" type="text" :title="item.upLong" v-model="item.upLong">
-            <span>米 x </span>
-            <input class="cusInput" type="text" :title="item.upTime" v-model="item.upTime">
-            <span>条</span>
-          </el-col>
-          <el-col :span="5">
-            <div class="recBorder">
-              <span v-if="item.typeNames[4].length > 0">{{item.typeNames[4][0].substr(0, 1)}}</span>
-              <span v-else>...</span>
-            </div>
-          </el-col>
-        </el-col>
 
-        <el-col :span="24" v-else>
-          <el-col :span="19">
+          <el-col :span="24" v-else>
             <b v-if="item.typeNames[0].length > 0">{{item.typeNames[0][0]}}</b>
             <b v-else>轨道</b>
             <span>{{item.upLong}}</span>
             <span>米 x </span>
             <span>{{item.upTime}}</span>
           </el-col>
-          <el-col :span="5">
-            <div class="recBorder">
-              <span v-if="item.typeNames[4].length > 0">{{item.typeNames[4][0].substr(0, 1)}}</span>
-              <span v-else>...</span>
-            </div>
+
+
+          <el-col :span="24" class="clearfix" style="height: 2px"></el-col>
+          <el-col class="showLabel" :span="24" v-if="item.typeNames[1].length > 0">
+            <span v-for="iname in item.typeNames[1]">{{iname}},</span>
           </el-col>
         </el-col>
 
 
-        <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
-        <el-col class="showLabel" :span="11" v-if="item.typeNames[1].length > 0">
-          <span v-for="iname in item.typeNames[1]">{{iname}},</span>
+        <el-col :span="5">
+          <div class="recBorder">
+            <span v-if="item.typeNames[4].length > 0">{{item.typeNames[4][0].substr(0, 1)}}</span>
+            <span v-else>...</span>
+          </div>
         </el-col>
+
+
+
+
         <el-col :span="24" class="clearfix" style="height: 5px"></el-col>
 
         <el-col :span="5" v-if="item.isEdit">
@@ -106,10 +104,10 @@
         </el-col>
 
         <el-col :span="14" class="redCircle">
-          <el-col :span="24" class="topSet" v-if="item.needHead" @click.native.stop="item.needHead=!item.needHead">
+          <el-col :span="24" class="topSet" v-if="item.needHead" @click.native="toggleNeedHead()">
             <el-col class="topSetItem" :key="i" v-for="i in 6" :span="4"></el-col>
           </el-col>
-          <el-col v-else :span="24" @click.native.stop="item.needHead=!item.needHead">
+          <el-col v-else :span="24" @click.native="toggleNeedHead()">
             <div class="clearfix" style="height: 22px"></div>
           </el-col>
 
@@ -218,9 +216,7 @@
     </el-col>
 
 
-
-
-    <el-col v-else class="addFrame">
+    <el-col v-if="item.itemMode === 2 && this.itemAttrs.hideNumFlag == 0" class="addFrame">
       <i class="el-icon-plus" @click="createItem()"></i>
     </el-col>
   </el-col>
@@ -334,16 +330,23 @@
       spanSize:{},
     },
     methods: {
-      changeEdit(){
-        for (let i in this.items){
-          if (i == this.index){
-            this.items[i].isEdit = 1;
-          }else {
-            this.items[i].isEdit = 0;
-          }
+      toggleNeedHead(){
+        if (this.item.isEdit){
+          this.item.needHead = !this.item.needHead;
         }
-        this.itemAttrs.sliderIndex = this.index;
-        this.itemAttrs.sliderFlag = 1;
+      },
+      changeEdit(){
+        if (!this.itemAttrs.hideNumFlag){
+          for (let i in this.items){
+            if (parseInt(i) === this.index){
+              this.items[i].isEdit = 1;
+            }else {
+              this.items[i].isEdit = 0;
+            }
+          }
+          this.itemAttrs.sliderIndex = this.index;
+          this.itemAttrs.sliderFlag = 1;
+        }
       },
       createItem(){
         this.$emit("createItem")

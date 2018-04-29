@@ -16,6 +16,7 @@
           :headTitle="titleName"
           @showTitle="showTitle"
           @printPaper="printPaper"
+          @editPage="editPage"
           @confirmPage="confirmPage"></headTop>
         <el-main>
           <el-col :span="24">
@@ -170,7 +171,7 @@
           chooseTittle: '',
           hideNumFlag: 0,
           sliderIndex: 0,
-          sliderFlag: 1,
+          sliderFlag: 0,
         },
         countAttrs: [],
         contentId: '',
@@ -217,58 +218,44 @@
           this.itemAttrs.hideNumFlag = query.hideNumFlag;
         }
         if (this.contentId){
+          this.sliderFlag = 0;
           let that = this;
-          let response = doDataPost('/product/getBill', {
+          let response = doDataPost('/product/getBillSimple', {
             uid: this.contentId,
           });
           response.then(function (result) {
-            if (result.data.code){
-              let billContent = result.data.billContent[0];
-              that.orderDetail.address = billContent.address;
-              that.orderDetail.mobile = billContent.mobile;
-              that.orderDetail.phone = billContent.phone;
-              that.orderDetail.memo = billContent.memo;
-              that.orderDetail.name = billContent.name;
-              that.orderDetail.prize = billContent.prize;
+              console.info(result)
+            if (result.data){
+              let billContent = result.data;
+              that.orderDetail = billContent.orderDetail;
+
+              for (let i in billContent.items){
+                billContent.items[i].isEdit = 0;
+              }
+
+              that.items = billContent.items;
+              if (!billContent.createTime){
+                billContent.createTime = new Date();
+              }
+              that.createTime = billContent.createTime;
+
               if (!billContent.titleName){
                 that.titleName = '订单:' + that.contentId;
               }else{
                 that.titleName = billContent.titleName;
               }
-              if (billContent.reciveTime){
-                that.orderDetail.reciveTime = new Date(billContent.reciveTime);
-              }else{
-                that.orderDetail.reciveTime = '';
-              }
-              if (billContent.createTime){
-                that.createTime = new Date(billContent.createTime);
-                that.createTime = that.createTime.getFullYear() + '年'
-                  + that.createTime.getMonth() + '月' + that.createTime.getDate() + '日 '
-                  + that.createTime.getHours() + ':' +that.createTime.getMinutes();
-              }else{
-                that.createTime = '';
-              }
-              that.orderDetail.preMoney = billContent.preMoney;
-              that.orderDetail.restMoney = billContent.restMoney;
-              that.orderDetail.cutFlag = !!billContent.cutFlag;
-              that.orderDetail.sliceFlag = !!billContent.sliceFlag;
-              that.orderDetail.packFlag = !!billContent.packFlag
-              that.orderDetail.operator = billContent.operator;
-              for (let i in result.data.items){
-                result.data.items[i].typeNames = JSON.parse(JSON.stringify(that.defaultItem.typeNames));
-                result.data.items[i].typePrizes = JSON.parse(JSON.stringify(that.defaultItem.typePrizes));
-              }
-              that.items = result.data.items;
+
               that.initSetTypeNames();
             }else{
               that.items.push(JSON.parse(JSON.stringify(that.defaultItem)));
             }
           });
         }else {
+          this.sliderFlag = 1;
           for(let i = 0;i < this.initItemSize;i++){
             let addItem = JSON.parse(JSON.stringify(this.defaultItem));
             if (i === 0){
-                addItem.isEdit = 1;
+              addItem.isEdit = 1;
             }
             this.items.push(addItem);
           }
@@ -277,36 +264,29 @@
           this.items.push(addItem);
         }
       },
-
+      editPage(){
+        this.itemAttrs.hideNumFlag = 0;
+        if (this.items.length > 0){
+          this.items[0].isEdit = 1;
+          this.sliderFlag = 1;
+          this.sliderIndex = 0;
+        }
+      },
       confirmPage(){
         let that = this;
         for (let i in this.items){
           if (this.items[i].selectTypesArray){
-            this.items[i].selectTypes = [].concat(
-              this.items[i].selectTypesArray[0],
-              this.items[i].selectTypesArray[1],
-              this.items[i].selectTypesArray[2],
-              this.items[i].selectTypesArray[3]
-            );
+            this.items[i].selectTypes = [];
+            for (let typeIndex in this.items[i].selectTypesArray){
+              this.items[i].selectTypes = this.items[i].selectTypes.concat(this.items[i].selectTypesArray[typeIndex]);
+            }
           }
         }
 
-        let response = doDataPost('/product/createBill', {
+        let response = doDataPost('/product/createBillSimple', {
           contentId: this.contentId,
-          memo: this.orderDetail.memo,
           items: this.items,
-          address: this.orderDetail.address,
-          mobile: this.orderDetail.mobile,
-          phone: this.orderDetail.phone,
-          name: this.orderDetail.name,
-          prize: this.orderDetail.prize,
-          reciveTime: this.orderDetail.reciveTime,
-          preMoney: this.orderDetail.preMoney,
-          restMoney: this.orderDetail.restMoney,
-          cutFlag: this.orderDetail.cutFlag,
-          sliceFlag: this.orderDetail.sliceFlag,
-          packFlag: this.orderDetail.packFlag,
-          operator: this.orderDetail.operator,
+          orderDetail: this.orderDetail,
           titleName: this.titleName,
         });
         response.then(function (result) {
@@ -316,10 +296,16 @@
             message: '保存成功!'
           });
         });
-        this.itemAttrs.hideNumFlag = !this.itemAttrs.hideNumFlag;
+        for (let i in this.items){
+          this.items[i].isEdit = 0;
+        }
+        this.itemAttrs.sliderFlag = 0;
+        this.itemAttrs.hideNumFlag = 1;
       },
+
+
       initSetTypeNames(){
-        for(let k in [0, 1, 2, 3]){
+        for(let k in 11){
           let that = this;
           let response = doDataPost('/product/getItemTypes', {
             type: k,
@@ -358,9 +344,6 @@
       },
       duringGetTypes(index, modelType){
         this.itemAttrs.modelType = modelType;
-
-
-
         this.itemAttrs.chooseTittle =  this.typeList[modelType].name;
 
         this.itemAttrs.curIndex = index;

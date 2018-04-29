@@ -3,16 +3,16 @@
     <headTop :headTitle="titleName"></headTop>
     <div class="box">
       <el-table :data="billList" @row-click="toPaper" style="width: 100%">
-        <el-table-column prop="uid" label="订单号"></el-table-column>
+        <el-table-column prop="contentId" label="订单号"></el-table-column>
         <el-table-column prop="titleName" label="订单名称"></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
-        <el-table-column prop="phone" label="手机"></el-table-column>
+        <el-table-column prop="orderDetail.name" label="姓名"></el-table-column>
+        <el-table-column prop="orderDetail.address" label="地址"></el-table-column>
+        <el-table-column prop="orderDetail.phone" label="手机"></el-table-column>
         <el-table-column prop="prize" label="合计"></el-table-column>
         <el-table-column prop="createTime" label="开单时间" width="200"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini"@click="deleteBill($event, scope.row.uid)">删除</el-button>
+            <el-button size="mini"@click="deleteBill($event, scope.row.contentId)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -75,9 +75,10 @@
           current: this.current,
         });
         response.then(function (result) {
-          if (result.data.code){
-            var billList = result.data.billList;
-            for (var i in billList){
+          if (result.data){
+            let billList = result.data.billList;
+            for (let i in billList){
+              billList[i].orderDetail = JSON.parse(billList[i].orderDetail);
               if (billList[i].createTime){
                 billList[i].createTime = new Date(billList[i].createTime);
                 billList[i].createTime = billList[i].createTime.getFullYear() + '年'
@@ -120,7 +121,7 @@
         });
       },
       toPaper(row){
-        this.$router.push({path: '/main/paper', query:{contentId: row.uid,hideNumFlag: 1}});
+        this.$router.push({path: '/main/paper', query:{contentId: row.contentId,hideNumFlag: 1}});
       },
       currentChange(value){
         this.current = value;

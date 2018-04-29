@@ -7,7 +7,7 @@
       <div class="head-go">
         <el-button v-if="hideNumFlag==0" type="success" round @click="confirmPage">保存</el-button>
         <el-button v-if="hideNumFlag==1" type="danger" round @click="printPaper">打印</el-button>
-        <el-button v-if="hideNumFlag==1" type="info" round @click="confirmPage">编辑</el-button>
+        <el-button v-if="hideNumFlag==1" type="info" round @click="editPage">编辑</el-button>
         <el-button v-if="hideNumFlag==1" type="success" round @click="toList">订单列表</el-button>
         <el-button v-if="addTypeFlag==1" type="info" round @click="confirmPage">新增</el-button>
       </div>
@@ -32,6 +32,9 @@
         },
         confirmPage(e){
           this.$emit('confirmPage')
+        },
+        editPage(e){
+          this.$emit('editPage')
         },
         printPaper(e){
           this.$emit('printPaper')
