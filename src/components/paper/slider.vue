@@ -57,7 +57,7 @@
         <el-col :span="24" class="clearfix" style="height: 30px"></el-col>
 
         <el-col class="btnItem" :span="12">
-          <el-checkbox v-model="items[itemAttrs.sliderIndex].waitFlag" label="待定" border size="mini"></el-checkbox>
+          <el-checkbox v-model="items[itemAttrs.sliderIndex].waitFlag" label="待定" size="mini"></el-checkbox>
         </el-col>
 
         <el-col :span="24" class="clearfix" style="height: 10px"></el-col>

@@ -8,9 +8,9 @@
       </el-date-picker>
     </el-col>
     <el-col :span="12">
-      <el-checkbox v-model="orderDetail.cutFlag" label="剪好" border size="mini"></el-checkbox>
-      <el-checkbox v-model="orderDetail.sliceFlag" label="介好" border size="mini"></el-checkbox>
-      <el-checkbox v-model="orderDetail.packFlag" label="入袋" border size="mini"></el-checkbox>
+      <el-checkbox v-model="orderDetail.cutFlag" label="剪好" size="mini"></el-checkbox>
+      <el-checkbox v-model="orderDetail.sliceFlag" label="介好" size="mini"></el-checkbox>
+      <el-checkbox v-model="orderDetail.packFlag" label="入袋" size="mini"></el-checkbox>
     </el-col>
     <el-col :span="24" class="clearfix" style="height: 5px"> </el-col>
     <el-col :span="6">
