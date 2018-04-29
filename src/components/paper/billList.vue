@@ -121,7 +121,7 @@
         });
       },
       toPaper(row){
-        this.$router.push({path: '/main/paper', query:{contentId: row.contentId,hideNumFlag: 1}});
+        this.$router.push({path: '/main/paper', query:{contentId: row.contentId}});
       },
       currentChange(value){
         this.current = value;

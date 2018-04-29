@@ -213,9 +213,9 @@
         let query = this.$route.query;
         if (query.contentId){
           this.contentId = query.contentId;
-        }
-        if (query.hideNumFlag){
-          this.itemAttrs.hideNumFlag = query.hideNumFlag;
+          this.itemAttrs.hideNumFlag = 1;
+        }else {
+          this.itemAttrs.hideNumFlag = 0;
         }
         if (this.contentId){
           this.sliderFlag = 0;
@@ -224,7 +224,6 @@
             uid: this.contentId,
           });
           response.then(function (result) {
-              console.info(result)
             if (result.data){
               let billContent = result.data;
               that.orderDetail = billContent.orderDetail;

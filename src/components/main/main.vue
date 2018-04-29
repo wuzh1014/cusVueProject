@@ -83,7 +83,7 @@ export default {
     toLink(index){
       switch (index){
         case 0:
-          this.$router.push({path: '/main/paper', query:{hideNumFlag: 0}});
+          this.$router.push({path: '/main/paper', query:{}});
           break;
         case 1:
           this.$router.push('/billList');

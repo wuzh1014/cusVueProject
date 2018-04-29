@@ -27,8 +27,8 @@
         'addTypeFlag'],
       methods: {
         routerto(e){
-//          this.$router.go(-1)
-          this.$router.push('/main');
+          this.$router.go(-1)
+//          this.$router.push('/main');
         },
         confirmPage(e){
           this.$emit('confirmPage')
