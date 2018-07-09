@@ -29,7 +29,7 @@
     </el-col>
 
 
-    <el-col :span="18" @click.native.stop="hideAllItem()">
+    <el-col :span="18" @click.native.stop="hideAllItem()" style="min-height: 400px">
       <el-col class="midTitle" :span="24">
         订单统计:
       </el-col>
